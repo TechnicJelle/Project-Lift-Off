@@ -1,0 +1,6 @@
+.vs
+.idea
+MyGame/obj
+MyGame/bin
+*.exe
+*.pdb
