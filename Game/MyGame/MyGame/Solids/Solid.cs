@@ -5,11 +5,11 @@ namespace MyGame.MyGame.Solids;
 
 public class Solid : Sprite
 {
-    public Solid(TiledObject obj) : base("barry.png")
+    protected Solid(TiledObject obj) : base("colors.png")
     {
-        this.width = (int)obj.Width;
-        this.height = (int)obj.Height;
+        // ReSharper disable once VirtualMemberCallInConstructor
+        width = (int)obj.Width;
+        // ReSharper disable once VirtualMemberCallInConstructor
+        height = (int)obj.Height;
     }
-    
-    
 }

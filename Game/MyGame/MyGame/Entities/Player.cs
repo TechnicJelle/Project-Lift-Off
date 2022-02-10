@@ -9,9 +9,13 @@ public class Player : Entity
 {
 	//Variables for the designers:
 	//General:
-	private const byte ANIMATION_DELAY = 100;
 	private const float PLAYER_MOVEMENT_SPEED = 1.6f;
 	private const float CONTROLLER_THRESHOLD = 0.2f;
+
+	//Animation
+	private const byte IDLE_ANIMATION_DELAY = 100;
+	// private const byte RUN_MIN_ANIMATION_DELAY = 100;
+	// private const byte RUN_MAX_ANIMATION_DELAY = 100;
 
 	//Double Jump:
 	private const int MAX_JUMPS = 2;
@@ -40,16 +44,21 @@ public class Player : Entity
 	private int _millisAtLastDash;
 
 	public Player(Vector2 spawnPos) :
-		base(spawnPos, "playerIdle.jpg", 8, 2, 12, ANIMATION_DELAY)
+		base(spawnPos, "playerIdle.png", 8, 2, 12, IDLE_ANIMATION_DELAY)
 	{
 		//Empty
 	}
 
-	public Player(TiledObject obj) : base(new Vector2(0, 0), "playerIdle.jpg", 8, 2, 12, ANIMATION_DELAY)
-	{}
+	public Player(TiledObject obj) : base(new Vector2(obj.X, obj.Y), "playerIdle.png", 8, 2, 12, IDLE_ANIMATION_DELAY)
+	{
+		//Empty
+	}
 
 	private new void Update()
 	{
+		// Console.WriteLine(_vel.MagSq());
+		// SetAnimationDelay((byte) Mathf.Map(_vel.MagSq(), 0, 200, 255, 50));
+
 		Vector2 mousePos = new(Input.mouseX, Input.mouseY);
 		Vector2 screenCenter = new(Game.main.width / 2.0f, Game.main.height / 2.0f);
 		Vector2 direction = Vector2.Sub(mousePos, screenCenter);

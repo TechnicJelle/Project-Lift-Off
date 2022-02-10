@@ -21,10 +21,15 @@ public class Entity : AnimationSprite
 		byte animationDelay = 1, bool keepInCache = false, bool addCollider = true) :
 		base(filename, cols, rows, frames, keepInCache, addCollider)
 	{
-		SetCycle(0, frames, animationDelay);
+		SetAnimationDelay(animationDelay);
 		_pos = spawnPos.Copy();
 		_vel = new Vector2(0.0f, 0.0f);
 		_acc = new Vector2(0.0f, 0.0f);
+	}
+
+	private void SetAnimationDelay(byte animationDelay)
+	{
+		SetCycle(0, _frames, animationDelay);
 	}
 
 	protected void ApplyForce(Vector2 f)

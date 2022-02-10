@@ -11,8 +11,8 @@ public class Enemy : Entity
 		base(spawnPos, "evilBarry.png", 4, 2, 7, ANIMATION_DELAY, true)
 	{
 	}
-	
-	public Enemy(TiledObject obj) : base(new Vector2(0, 0), "evilBarry.png", 4, 2, 7, ANIMATION_DELAY, true)
+
+	public Enemy(TiledObject obj) : base(new Vector2(obj.X, obj.Y), "evilBarry.png", 4, 2, 7, ANIMATION_DELAY, true)
 	{
 	}
 }
