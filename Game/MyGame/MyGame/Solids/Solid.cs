@@ -7,6 +7,9 @@ public class Solid : Sprite
 {
     protected Solid(TiledObject obj) : base("colors.png")
     {
+        this.collider.isTrigger = true;
+        game.AddChild(this);
+        
         // ReSharper disable once VirtualMemberCallInConstructor
         width = (int)obj.Width;
         // ReSharper disable once VirtualMemberCallInConstructor

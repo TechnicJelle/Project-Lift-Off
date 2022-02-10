@@ -44,12 +44,13 @@ public class Player : Entity
 	private int _millisAtLastDash;
 
 	public Player(Vector2 spawnPos) :
-		base(spawnPos, "playerIdle.png", 8, 2, 12, IDLE_ANIMATION_DELAY)
+		base("playerIdle.png", 8, 2, 12, IDLE_ANIMATION_DELAY)
 	{
-		//Empty
+		x = spawnPos.x;
+		y = spawnPos.y;
 	}
 
-	public Player(TiledObject obj) : base(new Vector2(obj.X, obj.Y), "playerIdle.png", 8, 2, 12, IDLE_ANIMATION_DELAY)
+	public Player(TiledObject obj) : base("playerIdle.png", 8, 2, 12, IDLE_ANIMATION_DELAY)
 	{
 		//Empty
 	}

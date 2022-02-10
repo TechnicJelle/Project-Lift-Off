@@ -16,18 +16,6 @@ public class MyGame : Game
 	private MyGame() : base(1366, 768, false, false, pPixelArt: true)
 	{
 		targetFps = 60;
-		// Draw some things on a canvas:
-		// EasyDraw canvas = new(width, height);
-		// canvas.Clear(Color.MediumPurple);
-		// canvas.Fill(Color.Yellow);
-		// canvas.Ellipse(width / 2.0f, height / 2.0f, 200, 200);
-		// canvas.Fill(50);
-		// canvas.TextSize(32);
-		// canvas.TextAlign(CenterMode.Center, CenterMode.Center);
-		// canvas.Text("Welcome!", width / 2.0f, height / 2.0f);
-		//
-		// // Add the canvas to the engine to display it:
-		// AddChild(canvas);
 		
 		AddChild(new Level());
 
@@ -35,7 +23,7 @@ public class MyGame : Game
 		{
 			DebugCanvas = new EasyDraw(width, height);
 			AddChild(DebugCanvas);
-		}
+		} 
 
 		Console.WriteLine("MyGame initialized");
 	}
