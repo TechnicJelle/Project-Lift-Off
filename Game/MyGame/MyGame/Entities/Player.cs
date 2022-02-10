@@ -68,12 +68,19 @@ public class Player : Entity
 		if (_jumping)
 		{
 			int millisSinceJump = Time.time - _millisAtStartJump;
-			//TODO: Make/Find a better formula for the jumpForce, preferably not a linear one like this, but instead an exponential one that starts off fast and then becomes less
-			float jumpForce = Mathf.Map(
-				Mathf.Clamp(MILLIS_FOR_MAX_JUMP - millisSinceJump, 0, MILLIS_FOR_MAX_JUMP),
-				500, 0, MAX_GRADUAL_JUMP_FORCE, 0);
+
+			float jumpProgress = Mathf.Clamp(Mathf.Map(MILLIS_FOR_MAX_JUMP - millisSinceJump, 0, MILLIS_FOR_MAX_JUMP, 1.0f, 0.0f), 0.0f, 1.0f);
+
+
+			//jumpProgress (range: 0.0f..1.0f) represents how long the jump has been going on for.
+			//0.0f: when the jump has just started
+			//1.0f: when the jump has reached its maximum height
+			//TODO: Construct a better formula for the jumpForce, preferably not a linear one like this, but instead an exponential one
+			float jumpForce = Mathf.Map(jumpProgress, 0.0f, 1.0f, MAX_GRADUAL_JUMP_FORCE, 0.0f);
+
+
 			ApplyForce(new Vector2(0, -jumpForce));
-			if(MyGame.DEBUG_MODE) Console.WriteLine("jumping with force of " + jumpForce + ", " + millisSinceJump);
+			if(MyGame.DEBUG_MODE) Console.WriteLine("jumping with force of " + jumpForce + ". jump progress: " + jumpProgress);
 		}
 
 		base.Update();
