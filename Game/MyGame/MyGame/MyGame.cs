@@ -9,6 +9,8 @@ namespace MyGame.MyGame;
 
 public class MyGame : Game
 {
+	public const bool DEBUG_MODE = true;
+
 	private MyGame() : base(1920, 1080, false, false, pPixelArt: true)
 	{
 		targetFps = 60;
@@ -25,8 +27,8 @@ public class MyGame : Game
 		// Add the canvas to the engine to display it:
 		AddChild(canvas);
 
-		AddChild(new Player(new Vector2(0.0f, 0.0f)));
 		AddChild(new Enemy(new Vector2(width/2.0f, 0.0f)));
+		AddChild(new Player(new Vector2(0.0f, 0.0f)));
 
 
 		Console.WriteLine("MyGame initialized");
