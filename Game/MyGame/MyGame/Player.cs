@@ -15,7 +15,7 @@ public class Player : Entity
 	private int jumpAmounts;
 
 	public Player(Vector2 spawnPos) :
-		base(spawnPos, "barry.png", 7, 1, 7, ANIMATION_DELAY)
+		base(spawnPos, "playerIdle.jpg", 8, 2, 12, ANIMATION_DELAY)
 	{
 		//Empty
 	}
