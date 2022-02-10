@@ -90,7 +90,6 @@ namespace GXPEngine
 			if (frames < 0) frames = rows * cols;
 			if (frames > rows * cols) frames = rows * cols;
 			if (frames < 1) return;
-			Console.WriteLine(this + " " + frames);
 			_cols = cols;
 			_rows = rows;
 			_frames = frames;

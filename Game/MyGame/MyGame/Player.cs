@@ -9,6 +9,10 @@ public class Player : Entity
 	private const float PLAYER_MOVEMENT_SPEED = 1.6f;
 	private const byte ANIMATION_DELAY = 100;
 	private readonly Vector2 jump = new(0.0f, -60);
+	private const int MAX_JUMPS = 2;
+
+	//Variables needed to track the internal state of the player
+	private int jumpAmounts;
 
 	public Player(Vector2 spawnPos) :
 		base(spawnPos, "barry.png", 7, 1, 7, ANIMATION_DELAY)
@@ -33,9 +37,15 @@ public class Player : Entity
 		if(input.MagSq() > 0.1f)
 			ApplyForce(input.Limit(1).Mult(PLAYER_MOVEMENT_SPEED));
 
-
-		if (colliding && (Input.GetKeyDown(Key.W) || Input.GetKeyDown(Key.SPACE)))
+		// ReSharper disable once ConvertIfStatementToSwitchStatement
+		if ((colliding || jumpAmounts < MAX_JUMPS) && (Input.GetKeyDown(Key.W) || Input.GetKeyDown(Key.SPACE)))
+		{
 			ApplyForce(jump);
+			jumpAmounts++;
+		} else if (colliding)
+		{
+			jumpAmounts = 0;
+		}
 
 		base.Update();
 	}
