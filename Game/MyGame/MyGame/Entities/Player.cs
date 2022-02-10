@@ -1,18 +1,18 @@
 ﻿using GXPEngine;
 using GXPEngine.Core;
 
-namespace MyGame.MyGame;
+namespace MyGame.MyGame.Entities;
 
 public class Player : Entity
 {
 	//Variables for the designers:
 	private const float PLAYER_MOVEMENT_SPEED = 1.6f;
 	private const byte ANIMATION_DELAY = 100;
-	private readonly Vector2 jump = new(0.0f, -60);
+	private readonly Vector2 _jump = new(0.0f, -60);
 	private const int MAX_JUMPS = 2;
 
 	//Variables needed to track the internal state of the player
-	private int jumpAmounts;
+	private int _jumpAmounts;
 
 	public Player(Vector2 spawnPos) :
 		base(spawnPos, "playerIdle.jpg", 8, 2, 12, ANIMATION_DELAY)
@@ -38,13 +38,13 @@ public class Player : Entity
 			ApplyForce(input.Limit(1).Mult(PLAYER_MOVEMENT_SPEED));
 
 		// ReSharper disable once ConvertIfStatementToSwitchStatement
-		if ((colliding || jumpAmounts < MAX_JUMPS) && (Input.GetKeyDown(Key.W) || Input.GetKeyDown(Key.SPACE)))
+		if ((Colliding || _jumpAmounts < MAX_JUMPS) && (Input.GetKeyDown(Key.W) || Input.GetKeyDown(Key.SPACE)))
 		{
-			ApplyForce(jump);
-			jumpAmounts++;
-		} else if (colliding)
+			ApplyForce(_jump);
+			_jumpAmounts++;
+		} else if (Colliding)
 		{
-			jumpAmounts = 0;
+			_jumpAmounts = 0;
 		}
 
 		base.Update();

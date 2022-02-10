@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using GXPEngine;
 using GXPEngine.Core;
+using MyGame.MyGame.Entities;
 
 namespace MyGame.MyGame;
 

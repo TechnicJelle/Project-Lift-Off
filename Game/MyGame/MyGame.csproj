@@ -10,7 +10,7 @@
     <RootNamespace>MyGame</RootNamespace>
     <AssemblyName>MyGame</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <LangVersion>default</LangVersion>
+    <LangVersion>10</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>True</DebugSymbols>
@@ -78,9 +78,9 @@
     <Compile Include="GXPEngine\FMOD\FMODSoundSystem.cs" />
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
-    <Compile Include="MyGame\Enemy.cs" />
-    <Compile Include="MyGame\Entity.cs" />
+    <Compile Include="MyGame\Entities\Enemy.cs" />
+    <Compile Include="MyGame\Entities\Entity.cs" />
+    <Compile Include="MyGame\Entities\Player.cs" />
     <Compile Include="MyGame\MyGame.cs" />
-    <Compile Include="MyGame\Player.cs" />
   </ItemGroup>
 </Project>

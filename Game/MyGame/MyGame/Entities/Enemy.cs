@@ -1,6 +1,6 @@
 ﻿using GXPEngine.Core;
 
-namespace MyGame.MyGame;
+namespace MyGame.MyGame.Entities;
 
 public class Enemy : Entity
 {
