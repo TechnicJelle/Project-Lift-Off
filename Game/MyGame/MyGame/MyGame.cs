@@ -10,6 +10,7 @@ namespace MyGame.MyGame;
 public class MyGame : Game
 {
 	public const bool DEBUG_MODE = true;
+	public static EasyDraw DebugCanvas;
 
 	private MyGame() : base(1920, 1080, false, false, pPixelArt: true)
 	{
@@ -27,6 +28,12 @@ public class MyGame : Game
 		// Add the canvas to the engine to display it:
 		AddChild(canvas);
 
+		if (DEBUG_MODE)
+		{
+			DebugCanvas = new EasyDraw(width, height);
+			AddChild(DebugCanvas);
+		}
+
 		AddChild(new Enemy(new Vector2(width/2.0f, 0.0f)));
 		AddChild(new Player(new Vector2(0.0f, 0.0f)));
 
@@ -37,7 +44,10 @@ public class MyGame : Game
 	// For every game object, Update is called every frame, by the engine:
 	private void Update()
 	{
-		//Empty
+		if (DEBUG_MODE)
+		{
+			DebugCanvas.ClearTransparent();
+		}
 	}
 
 	private static void Main()

@@ -7,16 +7,25 @@ namespace MyGame.MyGame.Entities;
 public class Player : Entity
 {
 	//Variables for the designers:
-	private const float PLAYER_MOVEMENT_SPEED = 1.6f;
+	//General:
 	private const byte ANIMATION_DELAY = 100;
+	private const float PLAYER_MOVEMENT_SPEED = 1.6f;
+	private const float CONTROLLER_THRESHOLD = 0.2f;
+
+	//Double Jump:
+	private const int MAX_JUMPS = 2;
+
+	//Hold to jump higher:
+	private const int MILLIS_FOR_MAX_JUMP = 500;
 	private const float MIN_INSTANT_JUMP_FORCE = 30.0f; //when you jump, you always jump at least with this much force
 	private const float MAX_GRADUAL_JUMP_FORCE = 5.0f; //every frame you're jumping, a fraction of this force is applied
-	private const int MAX_JUMPS = 2;
-	private const int MILLIS_FOR_MAX_JUMP = 500;
+
+	//Dash:
+	private const float DASH_FORCE = 100.0f;
+	private const int MILLIS_BETWEEN_DASHES = 4000;
 
 
 	//Variables needed to track the internal state of the player
-
 	//Double Jump:
 	private bool _inAir;
 	private int _jumpAmounts;
@@ -24,6 +33,10 @@ public class Player : Entity
 	//Hold to jump higher:
 	private bool _jumping;
 	private int _millisAtStartJump;
+	private int _millisSinceLastDash;
+
+	//Dash:
+	private int _millisAtLastDash;
 
 	public Player(Vector2 spawnPos) :
 		base(spawnPos, "playerIdle.jpg", 8, 2, 12, ANIMATION_DELAY)
@@ -33,25 +46,27 @@ public class Player : Entity
 
 	private new void Update()
 	{
+		Vector2 mousePos = new(Input.mouseX, Input.mouseY);
+		Vector2 screenCenter = new(Game.main.width / 2.0f, Game.main.height / 2.0f);
+		Vector2 direction = Vector2.Sub(mousePos, screenCenter);
+		if (MyGame.DEBUG_MODE) MyGame.DebugCanvas.Line(screenCenter.x, screenCenter.y, screenCenter.x + direction.x, screenCenter.y + direction.y);
 
+		//Basic Left/Right Movement
+		const float detail = 100.0f;
+		float xMovement = Mathf.Clamp(direction.x, -detail, detail) / detail;
+		if(Mathf.Abs(xMovement) > CONTROLLER_THRESHOLD)
+			ApplyForce(Vector2.Mult(new Vector2(xMovement, 0), PLAYER_MOVEMENT_SPEED));
 
-
-
-		Vector2 input = new(0.0f, 0.0f);
-
-		if (Input.GetKey(Key.A))
+		//Dashing movement
+		if (MyGame.DEBUG_MODE) MyGame.DebugCanvas.Text("" + _millisSinceLastDash);
+		_millisSinceLastDash = Time.time - _millisAtLastDash;
+		if (Input.GetKeyDown(Key.LEFT_SHIFT))
 		{
-			input.x = -1;
+			RequestDash(direction);
 		}
 
-		if (Input.GetKey(Key.D))
-		{
-			input.x = 1;
-		}
 
-		if (input.MagSq() > 0.1f)
-			ApplyForce(input.Limit(1).Mult(PLAYER_MOVEMENT_SPEED));
-
+		//Jumping Movement
 		if (_inAir && Colliding)
 		{
 			ResetJumps();
@@ -83,6 +98,7 @@ public class Player : Entity
 			if(MyGame.DEBUG_MODE) Console.WriteLine("jumping with force of " + jumpForce + ". jump progress: " + jumpProgress);
 		}
 
+		//Actually calculate and apply the forces that have been acting on the Player the past frame
 		base.Update();
 	}
 
@@ -107,5 +123,18 @@ public class Player : Entity
 		_inAir = false;
 		_jumpAmounts = 0;
 		Console.WriteLine("jump reset");
+	}
+
+	private void RequestDash(Vector2 direction)
+	{
+		Console.WriteLine(_millisSinceLastDash);
+		if (_millisSinceLastDash < MILLIS_BETWEEN_DASHES) return;
+		Dash(direction);
+	}
+
+	private void Dash(Vector2 direction)
+	{
+		_millisAtLastDash = Time.time;
+		ApplyForce(Vector2.Mult(direction.Copy().Normalize(), DASH_FORCE));
 	}
 }
