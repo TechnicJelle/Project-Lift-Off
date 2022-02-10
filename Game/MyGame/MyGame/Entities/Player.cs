@@ -1,6 +1,7 @@
 ﻿using System;
 using GXPEngine;
 using GXPEngine.Core;
+using TiledMapParser;
 
 namespace MyGame.MyGame.Entities;
 
@@ -43,6 +44,9 @@ public class Player : Entity
 	{
 		//Empty
 	}
+
+	public Player(TiledObject obj) : base(new Vector2(0, 0), "playerIdle.jpg", 8, 2, 12, ANIMATION_DELAY)
+	{}
 
 	private new void Update()
 	{
