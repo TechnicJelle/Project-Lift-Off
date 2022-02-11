@@ -126,7 +126,7 @@ public class Player : Entity
 		Console.WriteLine("jump start");
 	}
 
-	private void StopJump()
+	public void StopJump()
 	{
 		_jumping = false;
 		Console.WriteLine("jump end");

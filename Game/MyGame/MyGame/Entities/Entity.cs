@@ -9,10 +9,11 @@ public class Entity : AnimationSprite
 {
 	//Variables for the designers:
 	private const float DRAG_MULTIPLIER = 0.9f;
+	private const float WALL_SLIDE_DRAG_MULTIPLIER = 0.5f;
 	private readonly Vector2 _gravity = new(0.0f, 2.5f);
 
 	//Physics variables
-	private readonly Vector2 _vel;                                                                                                                                                                                                                                           
+	private readonly Vector2 _vel;
 	private readonly Vector2 _acc;
 
 	//Collision variables
@@ -25,8 +26,8 @@ public class Entity : AnimationSprite
 		SetAnimationDelay(animationDelay);
 		_vel = new Vector2(0.0f, 0.0f);
 		_acc = new Vector2(0.0f, 0.0f);
-		
-		this.collider.isTrigger = true;
+
+		collider.isTrigger = true;
 		game.AddChild(this);
 	}
 
@@ -40,39 +41,123 @@ public class Entity : AnimationSprite
 		_acc.Add(f);
 	}
 
-	public void Collisions()
+	private void Collisions()
 	{
-		GameObject[] objects = this.GetCollisions(true, false);
+		GameObject[] objects = GetCollisions(true, false);
 
 		Colliding = false;
 		foreach (GameObject obj in objects)
 		{
-			if (obj is Solid sol)
+			if (obj.GetType() == typeof(Sprite)) continue;
+			Sprite spr = (Sprite) obj;
+			if (MyGame.DEBUG_MODE)
 			{
-				if (sol is Floor flo)
-				{
-					this.y = flo.y - height;
-					this._vel.y = 0;
-					this.Colliding = true;
-				} else if (sol is Roof roo)
-				{
-					
-				} else if (sol is Wall wal)
-				{
-					this.x = wal.x - width;
-					this._vel.x = 0;
-					this.Colliding = true;
-				} else if (sol is Platform pla)
-				{
-					this.y = pla.y - height;
-					this._vel.y = 0;
-					this.Colliding = true;
-				}
-			} else if (obj is Entity ant)
+				MyGame.DebugCanvas.Fill(255);
+				MyGame.DebugCanvas.Rect(spr.x, spr.y, spr.width, spr.height);
+				MyGame.DebugCanvas.Fill(255, 0, 0);
+				MyGame.DebugCanvas.Ellipse(spr.x, spr.y, 16, 16);
+			}
+			switch (spr)
 			{
-				
+				case Floor flo:
+					y = flo.y - height;
+					_vel.y = 0;
+					Colliding = true;
+					break;
+				case Roof roo:
+					y = roo.y + roo.height;
+					_vel.y = 0;
+					if (GetType() == typeof(Player))
+					{
+						Player plr = (Player) this;
+						plr.StopJump();
+					}
+					break;
+				case Wall wal:
+					if (_vel.x < 0) //hit left wall
+						x = wal.x + wal.width;
+					else //hit right wall
+						x = wal.x - width;
+					_vel.x = 0;
+					Colliding = true;
+					_vel.y *= WALL_SLIDE_DRAG_MULTIPLIER;
+					break;
+				case Platform pla:
+					Colliding = true;
+
+
+					switch (SideHit(pla))
+					{
+						case 1:
+							x = pla.x - pla.width / 2f - width / 2f - 1;
+							_vel.x = 0;
+							break;
+
+						case 3:
+							x = pla.x + pla.width / 2f + width / 2f + 1;
+							_vel.x = 0;
+							break;
+
+						case 2:
+							y = pla.y - pla.height / 2f - height / 2f;
+							_vel.y = 0;
+							break;
+						case 4:
+							y = pla.y + pla.height / 2f + height / 2f;
+							_vel.y = 0;
+							if (GetType() == typeof(Player))
+							{
+								Player plr = (Player) this;
+								plr.StopJump();
+							}
+							break;
+					}
+
+					break;
+				case Solid sol:
+					throw new Exception("The game should not have any objects of type Solid. Only use types that extend it. " + sol);
+					break;
+
+				case Entity ant:
+					break;
 			}
 		}
+	}
+
+	/// <summary>
+	/// 0: nothing<br/>
+	/// 1: left<br/>
+	/// 2: top<br/>
+	/// 3: right<br/>
+	/// 4: bottom
+	/// </summary>
+	/// <param name="pla"></param>
+	/// <returns></returns>
+	private int SideHit(Platform pla)
+	{
+		bool ySide = y < pla.y+5;
+		if (ySide && y + height / 2f > pla.y - pla.height / 2f)
+		{
+			return 2;
+		}
+
+		if (!ySide && y - height / 2f < pla.y + pla.height / 2f)
+		{
+			return 4;
+		}
+
+		// bool xSide = x < pla.x;
+		// if (xSide && x + width / 2f > pla.x - pla.width / 2f)
+		// {
+		// 	return 1;
+		// }
+		//
+		// if (!xSide && x - width / 2f < pla.x + pla.width / 2f)
+		// {
+		// 	return 3;
+		// }
+
+		return 0;
 	}
 
 	protected void Update()
@@ -86,7 +171,7 @@ public class Entity : AnimationSprite
 		x += _vel.x;
 		y += _vel.y;
 		Collisions();
-			
+
 		_mirrorX = _acc.x switch
 		{
 			//Mirror the sprite based on the acceleration direction

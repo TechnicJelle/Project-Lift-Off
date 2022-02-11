@@ -9,7 +9,7 @@ public class Solid : Sprite
     {
         this.collider.isTrigger = true;
         game.AddChild(this);
-        
+
         // ReSharper disable once VirtualMemberCallInConstructor
         width = (int)obj.Width;
         // ReSharper disable once VirtualMemberCallInConstructor
