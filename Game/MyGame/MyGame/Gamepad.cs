@@ -8,7 +8,7 @@ namespace MyGame.MyGame;
 
 public static class Gamepad
 {
-	private static SerialPort _serialPort;
+    private static SerialPort _serialPort;
 
 	private const float DEAD_ZONE = 0.2f;
 	private const float DIST = 150f;
@@ -18,7 +18,7 @@ public static class Gamepad
 	static Gamepad()
 	{
 		_serialPort = new SerialPort();
-		_serialPort.PortName = "COM4"; //Set your board COM
+		_serialPort.PortName = "COM6"; //Set your board COM
 		_serialPort.BaudRate = 9600;
 		_serialPort.Open();
 
