@@ -81,6 +81,7 @@
     <Compile Include="MyGame\Entities\Enemy.cs" />
     <Compile Include="MyGame\Entities\Entity.cs" />
     <Compile Include="MyGame\Entities\Player.cs" />
+    <Compile Include="MyGame\Gamepad.cs" />
     <Compile Include="MyGame\Levels\Level.cs" />
     <Compile Include="MyGame\MyGame.cs" />
     <Compile Include="MyGame\Solids\Floor.cs" />

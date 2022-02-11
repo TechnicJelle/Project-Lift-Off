@@ -1,96 +1,23 @@
-#include <MouseTo.h>
-#include <Mouse.h>
-
-const int activate = 2;
-const int leftClick = 8;
-const int rightClick = 7;
-
-const int axisX = A1;
-const int axisY = A0;
-
-const int led = 12;
-
-int range = 12;
-int resDelay = 5;
-int threshold = range / 4;
-int center = range / 2;
-
-// int screenCenter[] = {MouseTo.getScreenResolutionX() / 2, MouseTo.getScreenResolutionY() / 2};
-
-bool isActive = false;
-int lastActiveState = LOW;
+const int JOYSTICK_BUTTON_PIN =  2;
+const int          X_AXIS_PIN = A1;
+const int          Y_AXIS_PIN = A0;
 
 void setup() {
-    pinMode(activate, INPUT);
-    pinMode(leftClick, INPUT);
-    pinMode(rightClick, INPUT);
-
-    // pinMode();
-    // pinMode();
-    // pinMode();
-    // pinMode();
-
-    pinMode(axisX, INPUT);
-    pinMode(axisY, INPUT);
-    
-    pinMode(led, OUTPUT);
-
-    Mouse.begin();
+  Serial.begin( 9600 );
+  pinMode(14, INPUT);
+  pinMode(15, INPUT);
+  pinMode(16, INPUT);
 }
 
 void loop() {
-    int activeState = digitalRead(activate);
-
-    if (activeState != lastActiveState) {
-        if (activeState == HIGH) {
-            isActive = !isActive;
-
-            digitalWrite(led, isActive);
-        }
-    }
-
-    lastActiveState = activeState;
-
-    int xRead = readAxis(A1);
-    int yRead = readAxis(A0);
-
-    Serial.println(MouseTo.getTargetX());
-    Serial.println(MouseTo.getTargetY());
-
-    if (isActive) {
-        Mouse.move(xRead, yRead, 0);
-    }
-
-    if (digitalRead(leftClick) == 1) {
-        if (!Mouse.isPressed(MOUSE_LEFT)) {
-            Serial.println("click");
-            Mouse.press(MOUSE_LEFT);
-        }
-    } else if (digitalRead(rightClick) == 1) {
-        if (!Mouse.isPressed(MOUSE_RIGHT)) {
-            Mouse.press(MOUSE_RIGHT);
-        }
-    } else {
-        if(Mouse.isPressed(MOUSE_LEFT)) {
-            Mouse.release(MOUSE_LEFT);
-        } else if (Mouse.isPressed(MOUSE_RIGHT)) {
-            Mouse.release(MOUSE_RIGHT);
-        }
-    }
-
-    delay(resDelay);    
-}
-
-int readAxis(int axis) {
-    int reading = analogRead(axis);
-
-    reading = map(reading, 0, 1023, 0, range);
-
-    int distance = reading - center;
-
-    if (abs(distance) < threshold) {
-        distance = 0;
-    }
-
-    return distance;
+  int inputX = analogRead(X_AXIS_PIN);
+  int inputY = analogRead(Y_AXIS_PIN);
+  bool bValue = digitalRead(JOYSTICK_BUTTON_PIN);
+  Serial.print(inputX, DEC);
+  Serial.print(",");
+  Serial.print(inputY, DEC);
+  Serial.print(",");
+  Serial.print(bValue);
+  Serial.print("\n");
+  delay(15);
 }

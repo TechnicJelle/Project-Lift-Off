@@ -60,14 +60,9 @@ public class Player : Entity
 		// Console.WriteLine(_vel.MagSq());
 		// SetAnimationDelay((byte) Mathf.Map(_vel.MagSq(), 0, 200, 255, 50));
 
-		Vector2 mousePos = new(Input.mouseX, Input.mouseY);
-		Vector2 screenCenter = new(Game.main.width / 2.0f, Game.main.height / 2.0f);
-		Vector2 direction = Vector2.Sub(mousePos, screenCenter);
-		if (MyGame.DEBUG_MODE) MyGame.DebugCanvas.Line(screenCenter.x, screenCenter.y, screenCenter.x + direction.x, screenCenter.y + direction.y);
-
 		//Basic Left/Right Movement
 		const float detail = 100.0f;
-		float xMovement = Mathf.Clamp(direction.x, -detail, detail) / detail;
+		float xMovement = Mathf.Clamp(Gamepad._joystick.x, -detail, detail) / detail;
 		if(Mathf.Abs(xMovement) > CONTROLLER_THRESHOLD)
 			ApplyForce(Vector2.Mult(new Vector2(xMovement, 0), PLAYER_MOVEMENT_SPEED));
 
@@ -76,7 +71,7 @@ public class Player : Entity
 		_millisSinceLastDash = Time.time - _millisAtLastDash;
 		if (Input.GetKeyDown(Key.LEFT_SHIFT) || Input.GetMouseButtonDown(1))
 		{
-			RequestDash(direction);
+			RequestDash(Gamepad._joystick);
 		}
 
 
