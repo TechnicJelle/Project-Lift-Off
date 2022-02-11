@@ -7,13 +7,19 @@ namespace MyGame.MyGame;
 
 public class MyGame : Game
 {
-	public const bool DEBUG_MODE = true;
+	public const bool DEBUG_MODE = false;
 	public static EasyDraw DebugCanvas;
 
 	private MyGame() : base(1408, 768, false, false, pPixelArt: true)
 	{
 		targetFps = 60;
 
+		Sprite background = new("background.png")
+		{
+			width = width,
+			height = height,
+		};
+		AddChild(background);
 		AddChild(new Level());
 
 		if (DEBUG_MODE)

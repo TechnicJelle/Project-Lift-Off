@@ -74,7 +74,7 @@ public class Player : Entity
 		//Dashing movement
 		if (MyGame.DEBUG_MODE) MyGame.DebugCanvas.Text("" + _millisSinceLastDash);
 		_millisSinceLastDash = Time.time - _millisAtLastDash;
-		if (Input.GetKeyDown(Key.LEFT_SHIFT))
+		if (Input.GetKeyDown(Key.LEFT_SHIFT) || Input.GetMouseButtonDown(1))
 		{
 			RequestDash(direction);
 		}
@@ -89,7 +89,7 @@ public class Player : Entity
 		{
 			StopJump();
 		}
-		if ((Colliding || _jumpAmounts < MAX_JUMPS) && (Input.GetKeyDown(Key.W) || Input.GetKeyDown(Key.SPACE)))
+		if ((Colliding || _jumpAmounts < MAX_JUMPS) && (Input.GetKeyDown(Key.W) || Input.GetKeyDown(Key.SPACE) || Input.GetMouseButtonDown(0)))
 		{
 			StartJump();
 		}
