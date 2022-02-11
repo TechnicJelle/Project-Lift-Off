@@ -85,7 +85,7 @@ public class Player : Entity
 		{
 			ResetJumps();
 		}
-		if (Colliding && _jumping || (Input.GetKeyUp(Key.W) || Input.GetKeyUp(Key.SPACE)))
+		if (Colliding && _jumping || (Input.GetKeyUp(Key.W) || Input.GetKeyUp(Key.SPACE) || Input.GetMouseButtonUp(0)))
 		{
 			StopJump();
 		}
@@ -123,25 +123,25 @@ public class Player : Entity
 		_inAir = true;
 		_jumpAmounts++;
 		ApplyForce(new Vector2(0, -MIN_INSTANT_JUMP_FORCE));
-		Console.WriteLine("jump start");
+		if (MyGame.DEBUG_MODE) Console.WriteLine("jump start");
 	}
 
 	public void StopJump()
 	{
 		_jumping = false;
-		Console.WriteLine("jump end");
+		if (MyGame.DEBUG_MODE) Console.WriteLine("jump end");
 	}
 
 	private void ResetJumps()
 	{
 		_inAir = false;
 		_jumpAmounts = 0;
-		Console.WriteLine("jump reset");
+		if (MyGame.DEBUG_MODE) Console.WriteLine("jump reset");
 	}
 
 	private void RequestDash(Vector2 direction)
 	{
-		Console.WriteLine(_millisSinceLastDash);
+		if (MyGame.DEBUG_MODE) Console.WriteLine(_millisSinceLastDash);
 		if (_millisSinceLastDash < MILLIS_BETWEEN_DASHES) return;
 		Dash(direction);
 	}
