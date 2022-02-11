@@ -1,3 +1,4 @@
+#include <MouseTo.h>
 #include <Mouse.h>
 
 const int activate = 2;
@@ -14,9 +15,7 @@ int resDelay = 5;
 int threshold = range / 4;
 int center = range / 2;
 
-int screenWidth = 1920;
-int screenHeight = 1080;
-int screenCenter[] = {screenWidth / 2, screenHeight / 2};
+// int screenCenter[] = {MouseTo.getScreenResolutionX() / 2, MouseTo.getScreenResolutionY() / 2};
 
 bool isActive = false;
 int lastActiveState = LOW;
@@ -25,6 +24,12 @@ void setup() {
     pinMode(activate, INPUT);
     pinMode(leftClick, INPUT);
     pinMode(rightClick, INPUT);
+
+    // pinMode();
+    // pinMode();
+    // pinMode();
+    // pinMode();
+
     pinMode(axisX, INPUT);
     pinMode(axisY, INPUT);
     
@@ -49,6 +54,9 @@ void loop() {
     int xRead = readAxis(A1);
     int yRead = readAxis(A0);
 
+    Serial.println(MouseTo.getTargetX());
+    Serial.println(MouseTo.getTargetY());
+
     if (isActive) {
         Mouse.move(xRead, yRead, 0);
     }
@@ -69,7 +77,6 @@ void loop() {
             Mouse.release(MOUSE_RIGHT);
         }
     }
-    
 
     delay(resDelay);    
 }
