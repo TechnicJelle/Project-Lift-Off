@@ -7,7 +7,7 @@ namespace MyGame.MyGame;
 
 public class MyGame : Game
 {
-	public const bool DEBUG_MODE = false;
+	public const bool DEBUG_MODE = true;
 	public static EasyDraw DebugCanvas;
 
 	private MyGame() : base(1408, 768, false, false, pPixelArt: true)
@@ -34,7 +34,6 @@ public class MyGame : Game
 	// For every game object, Update is called every frame, by the engine:
 	private void Update()
 	{
-		Gamepad.Update();
 		if (DEBUG_MODE)
 		{
 			DebugCanvas.ClearTransparent();

@@ -49,7 +49,7 @@ public class Player : Entity
 		y = spawnPos.y;
 	}
 
-	public Player(TiledObject obj) : base("playerIdle.png", 8, 2, 12, IDLE_ANIMATION_DELAY)
+	public Player(TiledObject obj) : base("playerDash.png", 6, 1, 6, IDLE_ANIMATION_DELAY)
 	{
 		//Empty
 	}
@@ -67,12 +67,12 @@ public class Player : Entity
 		//Dashing movement
 		if (MyGame.DEBUG_MODE) MyGame.DebugCanvas.Text("" + _millisSinceLastDash);
 		_millisSinceLastDash = Time.time - _millisAtLastDash;
-		if (Input.GetKeyDown(Key.LEFT_SHIFT) || Input.GetMouseButtonDown(1))
+		if (Input.GetKeyDown(Key.LEFT_SHIFT) || Input.GetMouseButtonDown(1) || Gamepad._actions[0] == 1)
 		{
 			RequestDash(Gamepad._joystick);
 		}
 
-
+		Console.WriteLine(Gamepad._actions[0] + "," + Gamepad._actions[1]);
 		//Jumping Movement
 		if (_inAir && CollidingWithFloor)
 		{
@@ -81,10 +81,12 @@ public class Player : Entity
 		if (CollidingWithFloor && _jumping || (Input.GetKeyUp(Key.W) || Input.GetKeyUp(Key.SPACE) || Input.GetMouseButtonUp(0) || Gamepad._actions[1] == 1))
 		{
 			StopJump();
+			Gamepad._actions[1] = 0;
 		}
 		if ((CollidingWithFloor || _jumpAmounts < MAX_JUMPS) && (Input.GetKeyDown(Key.W) || Input.GetKeyDown(Key.SPACE) || Input.GetMouseButtonDown(0) || Gamepad._actions[1] == 1))
 		{
 			StartJump();
+			Gamepad._actions[1] = 0;
 		}
 
 		if (_jumping)
