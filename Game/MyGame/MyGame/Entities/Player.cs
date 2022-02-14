@@ -74,15 +74,15 @@ public class Player : Entity
 
 
 		//Jumping Movement
-		if (_inAir && Colliding)
+		if (_inAir && CollidingWithFloor)
 		{
 			ResetJumps();
 		}
-		if (Colliding && _jumping || (Input.GetKeyUp(Key.W) || Input.GetKeyUp(Key.SPACE) || Input.GetMouseButtonUp(0)))
+		if (CollidingWithFloor && _jumping || (Input.GetKeyUp(Key.W) || Input.GetKeyUp(Key.SPACE) || Input.GetMouseButtonUp(0) || Gamepad._actions[1] == 1))
 		{
 			StopJump();
 		}
-		if ((Colliding || _jumpAmounts < MAX_JUMPS) && (Input.GetKeyDown(Key.W) || Input.GetKeyDown(Key.SPACE) || Input.GetMouseButtonDown(0)))
+		if ((CollidingWithFloor || _jumpAmounts < MAX_JUMPS) && (Input.GetKeyDown(Key.W) || Input.GetKeyDown(Key.SPACE) || Input.GetMouseButtonDown(0) || Gamepad._actions[1] == 1))
 		{
 			StartJump();
 		}
