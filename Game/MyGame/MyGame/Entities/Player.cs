@@ -9,8 +9,7 @@ public class Player : Entity
 {
 	//Variables for the designers:
 	//General:
-	private const float PLAYER_MOVEMENT_SPEED = 1.6f;
-	private const float CONTROLLER_THRESHOLD = 0.2f;
+	private const float PLAYER_MOVEMENT_SPEED = 100.0f;
 
 	//Animation
 	private const byte IDLE_ANIMATION_DELAY = 100;
@@ -63,8 +62,7 @@ public class Player : Entity
 		//Basic Left/Right Movement
 		const float detail = 100.0f;
 		float xMovement = Mathf.Clamp(Gamepad._joystick.x, -detail, detail) / detail;
-		if(Mathf.Abs(xMovement) > CONTROLLER_THRESHOLD)
-			ApplyForce(Vector2.Mult(new Vector2(xMovement, 0), PLAYER_MOVEMENT_SPEED));
+		ApplyForce(Vector2.Mult(new Vector2(xMovement, 0), PLAYER_MOVEMENT_SPEED));
 
 		//Dashing movement
 		if (MyGame.DEBUG_MODE) MyGame.DebugCanvas.Text("" + _millisSinceLastDash);
