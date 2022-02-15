@@ -21,8 +21,8 @@ public class Player : Entity
 
 	//Hold to jump higher:
 	private const int MILLIS_FOR_MAX_JUMP = 500;
-	private const float MIN_INSTANT_JUMP_FORCE = 30.0f; //when you jump, you always jump at least with this much force
-	private const float MAX_GRADUAL_JUMP_FORCE = 5.0f; //every frame you're jumping, a fraction of this force is applied
+	private const float MIN_INSTANT_JUMP_FORCE = 8.0f; //when you jump, you always jump at least with this much force
+	private const float MAX_GRADUAL_JUMP_FORCE = 6.0f; //every frame you're jumping, a fraction of this force is applied
 
 	//Dash:
 	private const float DASH_FORCE = 100.0f;
@@ -67,26 +67,24 @@ public class Player : Entity
 		//Dashing movement
 		if (MyGame.DEBUG_MODE) MyGame.DebugCanvas.Text("" + _millisSinceLastDash);
 		_millisSinceLastDash = Time.time - _millisAtLastDash;
-		if (Input.GetKeyDown(Key.LEFT_SHIFT) || Input.GetMouseButtonDown(1) || Gamepad._actions[0] == 1)
+		if (Input.GetKeyDown(Key.LEFT_SHIFT) || Input.GetMouseButtonDown(1))
 		{
 			RequestDash(Gamepad._joystick);
 		}
 
-		Console.WriteLine(Gamepad._actions[0] + "," + Gamepad._actions[1]);
+		// Console.WriteLine(Gamepad._actions[0] + "," + Gamepad._actions[1]);
 		//Jumping Movement
 		if (_inAir && CollidingWithFloor)
 		{
 			ResetJumps();
 		}
-		if (CollidingWithFloor && _jumping || (Input.GetKeyUp(Key.W) || Input.GetKeyUp(Key.SPACE) || Input.GetMouseButtonUp(0) || Gamepad._actions[1] == 1))
+		if (CollidingWithFloor && _jumping || (Input.GetKeyUp(Key.W) || Input.GetKeyUp(Key.SPACE) || Input.GetMouseButtonUp(0)))
 		{
 			StopJump();
-			Gamepad._actions[1] = 0;
 		}
-		if ((CollidingWithFloor || _jumpAmounts < MAX_JUMPS) && (Input.GetKeyDown(Key.W) || Input.GetKeyDown(Key.SPACE) || Input.GetMouseButtonDown(0) || Gamepad._actions[1] == 1))
+		if ((CollidingWithFloor || _jumpAmounts < MAX_JUMPS) && (Input.GetKeyDown(Key.W) || Input.GetKeyDown(Key.SPACE) || Input.GetMouseButtonDown(0)))
 		{
 			StartJump();
-			Gamepad._actions[1] = 0;
 		}
 
 		if (_jumping)
@@ -107,7 +105,7 @@ public class Player : Entity
 			if(MyGame.DEBUG_MODE) Console.WriteLine("jumping with force of " + jumpForce + ". jump progress: " + jumpProgress);
 		}
 
-		//Actually calculate and apply the forces that have been acting on the Player the past frame
+		//Actually calculate and apply the forces that have been acting on the Player the past frame]
 		base.Update();
 	}
 

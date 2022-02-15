@@ -85,6 +85,7 @@
     <Compile Include="GXPEngine\FMOD\FMODSoundSystem.cs" />
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
+    <Compile Include="MyGame\Collision.cs" />
     <Compile Include="MyGame\Entities\Enemy.cs" />
     <Compile Include="MyGame\Entities\Entity.cs" />
     <Compile Include="MyGame\Entities\Player.cs" />
