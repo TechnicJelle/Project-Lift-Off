@@ -11,10 +11,10 @@ public class Level : GameObject
     public Level(string path)
     {
         _tiledLoader = new TiledLoader($"../../{path}");
-        CreateLevel();
+        // CreateLevel();
     }
 
-    private void CreateLevel()
+    public void CreateLevel()
     {
         _tiledLoader.autoInstance = true;
         

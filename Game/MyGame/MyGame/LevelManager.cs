@@ -37,19 +37,17 @@ public class LevelManager
 
     public void Init()
     {
-        _game.AddChild(GetMenu());
-        _lastLevel = GetMenu();
-    }
-
-    private Level GetMenu()
-    {
-        return _levels["menu"];
+        SetLevel("test");
     }
 
     public void SetLevel(string levelName)
     {
-        _game.RemoveChild(_lastLevel);
-        _game.AddChild(_levels[levelName]);
+        if (_lastLevel != null) _game.RemoveChild(_lastLevel);
+
+        var level = _levels[levelName];
+        level.CreateLevel();
+        
+        _game.AddChild(level);
 
         _lastLevel = _levels[levelName];
     }

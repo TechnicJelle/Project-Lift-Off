@@ -49,13 +49,14 @@ public class Player : Entity
 		y = spawnPos.y;
 	}
 
-	public Player(TiledObject obj) : base("playerDash.png", 6, 1, 6, IDLE_ANIMATION_DELAY)
+	public Player(TiledObject obj) : base("playerIdle.png", 8, 2, 12, IDLE_ANIMATION_DELAY)
 	{
 		//Empty
 	}
 
 	private new void Update()
 	{
+		Console.WriteLine($"{x}, {y}");
 		// Console.WriteLine(_vel.MagSq());
 		// SetAnimationDelay((byte) Mathf.Map(_vel.MagSq(), 0, 200, 255, 50));
 
@@ -72,7 +73,7 @@ public class Player : Entity
 			RequestDash(Gamepad._joystick);
 		}
 
-		Console.WriteLine(Gamepad._actions[0] + "," + Gamepad._actions[1]);
+		// Console.WriteLine(Gamepad._actions[0] + "," + Gamepad._actions[1]);
 		//Jumping Movement
 		if (_inAir && CollidingWithFloor)
 		{
