@@ -7,9 +7,10 @@ public class Level : GameObject
 {
     private readonly TiledLoader _tiledLoader;
 
-    public Level()
+    public Level(string path)
     {
-        _tiledLoader = new TiledLoader("../../assets/maps/demo.tmx");
+        _tiledLoader = new TiledLoader($"../../{path}");
+
         CreateLevel();
     }
 
