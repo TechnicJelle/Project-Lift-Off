@@ -1,4 +1,6 @@
-﻿using GXPEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using GXPEngine;
 using TiledMapParser;
 
 namespace MyGame.MyGame.Levels;
@@ -6,11 +8,9 @@ namespace MyGame.MyGame.Levels;
 public class Level : GameObject
 {
     private readonly TiledLoader _tiledLoader;
-
     public Level(string path)
     {
         _tiledLoader = new TiledLoader($"../../{path}");
-
         CreateLevel();
     }
 

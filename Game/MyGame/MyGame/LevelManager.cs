@@ -12,9 +12,9 @@ namespace MyGame.MyGame;
 
 public class LevelManager
 {
-    public Dictionary<string, Level> Levels = new();
-    private JObject _levels;
-    private Game _game = Game.main;
+    private Dictionary<string, Level> _levels = new();
+    private Level _lastLevel;
+    private readonly Game _game = Game.main;
 
     public LevelManager()
     {
@@ -22,11 +22,11 @@ public class LevelManager
 
         try
         {
-            _levels = JObject.Parse(text);
+            var rawLevels = JObject.Parse(text);
 
-            foreach (var raw in _levels)
+            foreach (var raw in rawLevels)
             {
-                Levels.Add(raw.Key, new Level(raw.Value.ToString()));
+                _levels.Add(raw.Key, new Level(raw.Value.ToString()));
             }
         }
         catch (Exception e)
@@ -38,23 +38,27 @@ public class LevelManager
     public void Init()
     {
         _game.AddChild(GetMenu());
+        _lastLevel = GetMenu();
     }
 
     private Level GetMenu()
     {
-        return Levels["menu"];
+        return _levels["menu"];
     }
 
-    public Level GetLevel(string levelName)
+    public void SetLevel(string levelName)
     {
-        return Levels[levelName];
+        _game.RemoveChild(_lastLevel);
+        _game.AddChild(_levels[levelName]);
+
+        _lastLevel = _levels[levelName];
     }
 
-    public List<Level> GetLevels()
+    public void ClearLevels()
     {
-        List<Level> temp = new();
-        temp.AddRange(Levels.Values);
-
-        return temp;
+        foreach (Level level in _levels.Values)
+        {
+            _game.RemoveChild(level);
+        }
     }
 }
