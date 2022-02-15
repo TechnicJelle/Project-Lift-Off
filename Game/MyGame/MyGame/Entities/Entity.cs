@@ -17,7 +17,7 @@ public class Entity : AnimationSprite
 	private readonly Vector2 _acc;
 
 	//Collision variables
-	protected bool Colliding;
+	protected bool CollidingWithFloor;
 
 	protected Entity(string filename, int cols, int rows, int frames,
 		byte animationDelay = 1, bool keepInCache = false, bool addCollider = true) :
@@ -45,7 +45,7 @@ public class Entity : AnimationSprite
 	{
 		GameObject[] objects = GetCollisions(true, false);
 
-		Colliding = false;
+		CollidingWithFloor = false;
 		foreach (GameObject obj in objects)
 		{
 			if (obj.GetType() == typeof(Sprite)) continue;
@@ -62,7 +62,7 @@ public class Entity : AnimationSprite
 				case Floor flo:
 					y = flo.y - height;
 					_vel.y = 0;
-					Colliding = true;
+					CollidingWithFloor = true;
 					break;
 				case Roof roo:
 					y = roo.y + roo.height;
@@ -79,11 +79,11 @@ public class Entity : AnimationSprite
 					else //hit right wall
 						x = wal.x - width;
 					_vel.x = 0;
-					Colliding = true;
+					CollidingWithFloor = true;
 					_vel.y *= WALL_SLIDE_DRAG_MULTIPLIER;
 					break;
 				case Platform pla:
-					Colliding = true;
+					CollidingWithFloor = true;
 
 
 					switch (SideHit(pla))
@@ -109,6 +109,7 @@ public class Entity : AnimationSprite
 							{
 								Player plr = (Player) this;
 								plr.StopJump();
+								CollidingWithFloor = false;
 							}
 							break;
 					}

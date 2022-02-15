@@ -1,96 +1,38 @@
-#include <MouseTo.h>
-#include <Mouse.h>
+//const int JOYSTICK_BUTTON_PIN =  2;
+//const int          X_AXIS_PIN = A1;
+//const int          Y_AXIS_PIN = A0;
+//
+const int joystickClick = 2;
+const int joystickX = A1;
+const int joystickY = A0;
 
-const int activate = 2;
-const int leftClick = 8;
-const int rightClick = 7;
+const int jumpPin = 8;
+const int dashPin = 7;
 
-const int axisX = A1;
-const int axisY = A0;
-
-const int led = 12;
-
-int range = 12;
-int resDelay = 5;
-int threshold = range / 4;
-int center = range / 2;
-
-// int screenCenter[] = {MouseTo.getScreenResolutionX() / 2, MouseTo.getScreenResolutionY() / 2};
-
-bool isActive = false;
-int lastActiveState = LOW;
+bool isJumping = false;
+bool lastJump = false;
 
 void setup() {
-    pinMode(activate, INPUT);
-    pinMode(leftClick, INPUT);
-    pinMode(rightClick, INPUT);
-
-    // pinMode();
-    // pinMode();
-    // pinMode();
-    // pinMode();
-
-    pinMode(axisX, INPUT);
-    pinMode(axisY, INPUT);
-    
-    pinMode(led, OUTPUT);
-
-    Mouse.begin();
+  Serial.begin( 9600 );
+  pinMode(8, INPUT);
+  pinMode(7, INPUT);
 }
 
 void loop() {
-    int activeState = digitalRead(activate);
 
-    if (activeState != lastActiveState) {
-        if (activeState == HIGH) {
-            isActive = !isActive;
+  isJumping = digitalRead(jumpPin);
+    
+  Serial.print(analogRead(joystickX), DEC);
+  Serial.print(",");
+  Serial.print(analogRead(joystickY), DEC);
+  Serial.print(",");
+  Serial.print(digitalRead(joystickClick));
+  Serial.print(",");
+  Serial.print(isJumping != lastJump);
+  Serial.print(",");
+  Serial.print(digitalRead(dashPin));
+  Serial.print("\n");
+  delay(15);
 
-            digitalWrite(led, isActive);
-        }
-    }
-
-    lastActiveState = activeState;
-
-    int xRead = readAxis(A1);
-    int yRead = readAxis(A0);
-
-    Serial.println(MouseTo.getTargetX());
-    Serial.println(MouseTo.getTargetY());
-
-    if (isActive) {
-        Mouse.move(xRead, yRead, 0);
-    }
-
-    if (digitalRead(leftClick) == 1) {
-        if (!Mouse.isPressed(MOUSE_LEFT)) {
-            Serial.println("click");
-            Mouse.press(MOUSE_LEFT);
-        }
-    } else if (digitalRead(rightClick) == 1) {
-        if (!Mouse.isPressed(MOUSE_RIGHT)) {
-            Mouse.press(MOUSE_RIGHT);
-        }
-    } else {
-        if(Mouse.isPressed(MOUSE_LEFT)) {
-            Mouse.release(MOUSE_LEFT);
-        } else if (Mouse.isPressed(MOUSE_RIGHT)) {
-            Mouse.release(MOUSE_RIGHT);
-        }
-    }
-
-    delay(resDelay);    
-}
-
-int readAxis(int axis) {
-    int reading = analogRead(axis);
-
-    reading = map(reading, 0, 1023, 0, range);
-
-    int distance = reading - center;
-
-    if (abs(distance) < threshold) {
-        distance = 0;
-    }
-
-    return distance;
+  lastJump = isJumping;
 }

@@ -9,8 +9,7 @@ public class Player : Entity
 {
 	//Variables for the designers:
 	//General:
-	private const float PLAYER_MOVEMENT_SPEED = 1.6f;
-	private const float CONTROLLER_THRESHOLD = 0.2f;
+	private const float PLAYER_MOVEMENT_SPEED = 100.0f;
 
 	//Animation
 	private const byte IDLE_ANIMATION_DELAY = 100;
@@ -50,7 +49,7 @@ public class Player : Entity
 		y = spawnPos.y;
 	}
 
-	public Player(TiledObject obj) : base("playerIdle.png", 8, 2, 12, IDLE_ANIMATION_DELAY)
+	public Player(TiledObject obj) : base("playerDash.png", 6, 1, 6, IDLE_ANIMATION_DELAY)
 	{
 		//Empty
 	}
@@ -60,38 +59,34 @@ public class Player : Entity
 		// Console.WriteLine(_vel.MagSq());
 		// SetAnimationDelay((byte) Mathf.Map(_vel.MagSq(), 0, 200, 255, 50));
 
-		Vector2 mousePos = new(Input.mouseX, Input.mouseY);
-		Vector2 screenCenter = new(Game.main.width / 2.0f, Game.main.height / 2.0f);
-		Vector2 direction = Vector2.Sub(mousePos, screenCenter);
-		if (MyGame.DEBUG_MODE) MyGame.DebugCanvas.Line(screenCenter.x, screenCenter.y, screenCenter.x + direction.x, screenCenter.y + direction.y);
-
 		//Basic Left/Right Movement
 		const float detail = 100.0f;
-		float xMovement = Mathf.Clamp(direction.x, -detail, detail) / detail;
-		if(Mathf.Abs(xMovement) > CONTROLLER_THRESHOLD)
-			ApplyForce(Vector2.Mult(new Vector2(xMovement, 0), PLAYER_MOVEMENT_SPEED));
+		float xMovement = Mathf.Clamp(Gamepad._joystick.x, -detail, detail) / detail;
+		ApplyForce(Vector2.Mult(new Vector2(xMovement, 0), PLAYER_MOVEMENT_SPEED));
 
 		//Dashing movement
 		if (MyGame.DEBUG_MODE) MyGame.DebugCanvas.Text("" + _millisSinceLastDash);
 		_millisSinceLastDash = Time.time - _millisAtLastDash;
-		if (Input.GetKeyDown(Key.LEFT_SHIFT) || Input.GetMouseButtonDown(1))
+		if (Input.GetKeyDown(Key.LEFT_SHIFT) || Input.GetMouseButtonDown(1) || Gamepad._actions[0] == 1)
 		{
-			RequestDash(direction);
+			RequestDash(Gamepad._joystick);
 		}
 
-
+		Console.WriteLine(Gamepad._actions[0] + "," + Gamepad._actions[1]);
 		//Jumping Movement
-		if (_inAir && Colliding)
+		if (_inAir && CollidingWithFloor)
 		{
 			ResetJumps();
 		}
-		if (Colliding && _jumping || (Input.GetKeyUp(Key.W) || Input.GetKeyUp(Key.SPACE) || Input.GetMouseButtonUp(0)))
+		if (CollidingWithFloor && _jumping || (Input.GetKeyUp(Key.W) || Input.GetKeyUp(Key.SPACE) || Input.GetMouseButtonUp(0) || Gamepad._actions[1] == 1))
 		{
 			StopJump();
+			Gamepad._actions[1] = 0;
 		}
-		if ((Colliding || _jumpAmounts < MAX_JUMPS) && (Input.GetKeyDown(Key.W) || Input.GetKeyDown(Key.SPACE) || Input.GetMouseButtonDown(0)))
+		if ((CollidingWithFloor || _jumpAmounts < MAX_JUMPS) && (Input.GetKeyDown(Key.W) || Input.GetKeyDown(Key.SPACE) || Input.GetMouseButtonDown(0) || Gamepad._actions[1] == 1))
 		{
 			StartJump();
+			Gamepad._actions[1] = 0;
 		}
 
 		if (_jumping)
