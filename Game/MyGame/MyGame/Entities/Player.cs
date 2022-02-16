@@ -43,26 +43,39 @@ public class Player : Entity
 	private int _millisAtLastDash;
 
 	public Player(Vector2 spawnPos) :
-		base("playerIdle.png", 8, 2, 12, IDLE_ANIMATION_DELAY)
+		base("player.png", 12, 5, 64, IDLE_ANIMATION_DELAY)
 	{
 		x = spawnPos.x;
 		y = spawnPos.y;
 	}
 
-	public Player(TiledObject obj) : base("playerDash.png", 6, 1, 6, IDLE_ANIMATION_DELAY)
+	public Player(TiledObject obj) : base("player.png", 16, 5, 64, IDLE_ANIMATION_DELAY)
 	{
 		//Empty
 	}
 
 	private new void Update()
 	{
-		// Console.WriteLine(_vel.MagSq());
+		bool isDashing = this._vel.MagSq() > PLAYER_MOVEMENT_SPEED * PLAYER_MOVEMENT_SPEED * 1.1;
+		// Console.WriteLine(this._vel.MagSq() > PLAYER_MOVEMENT_SPEED * PLAYER_MOVEMENT_SPEED * 1.1);
 		// SetAnimationDelay((byte) Mathf.Map(_vel.MagSq(), 0, 200, 255, 50));
 
 		//Basic Left/Right Movement
 		const float detail = 100.0f;
+		Gamepad.Update();
 		float xMovement = Mathf.Clamp(Gamepad._joystick.x, -detail, detail) / detail;
 		ApplyForce(Vector2.Mult(new Vector2(xMovement, 0), PLAYER_MOVEMENT_SPEED));
+
+		if (xMovement != 0 && xMovement != 0 && !_inAir && !isDashing)
+		{
+			this.SetCycle(49, 5);
+			this.AnimateFixed();
+		}
+		else if (xMovement == 0 && !_inAir && !isDashing)
+		{
+			this.SetCycle(0, 12);
+			this.AnimateFixed();
+		}
 
 		//Dashing movement
 		if (MyGame.DEBUG_MODE) MyGame.DebugCanvas.Text("" + _millisSinceLastDash);
@@ -72,7 +85,7 @@ public class Player : Entity
 			RequestDash(Gamepad._joystick);
 		}
 
-		Console.WriteLine(Gamepad._actions[0] + "," + Gamepad._actions[1]);
+		// Console.WriteLine(Gamepad._actions[0] + "," + Gamepad._actions[1]);
 		//Jumping Movement
 		if (_inAir && CollidingWithFloor)
 		{
@@ -117,6 +130,8 @@ public class Player : Entity
 		_jumping = true;
 		_inAir = true;
 		_jumpAmounts++;
+		this.SetCycle(33, 7);
+		this.AnimateFixed();
 		ApplyForce(new Vector2(0, -MIN_INSTANT_JUMP_FORCE));
 		if (MyGame.DEBUG_MODE) Console.WriteLine("jump start");
 	}
@@ -144,6 +159,8 @@ public class Player : Entity
 	private void Dash(Vector2 direction)
 	{
 		_millisAtLastDash = Time.time;
+		this.SetCycle(17, 5);
+		this.AnimateFixed();
 		ApplyForce(Vector2.Mult(direction.Copy().Normalize(), DASH_FORCE));
 	}
 }

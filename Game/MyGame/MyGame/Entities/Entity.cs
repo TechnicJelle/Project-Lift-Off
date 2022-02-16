@@ -13,7 +13,7 @@ public class Entity : AnimationSprite
 	private readonly Vector2 _gravity = new(0.0f, 2.5f);
 
 	//Physics variables
-	private readonly Vector2 _vel;
+	public readonly Vector2 _vel;
 	private readonly Vector2 _acc;
 
 	//Collision variables

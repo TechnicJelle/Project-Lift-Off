@@ -13,8 +13,9 @@ public static class Gamepad
     private static readonly SerialPort SerialPort;
     public static Vector2 _joystick { get; private set; }
     public static int[] _actions { get; private set; }
-
-	static Gamepad()
+    private static float x = 0.0f;
+    private static float y = 0.0f;
+    static Gamepad()
 	{
 		try
 		{
@@ -36,9 +37,6 @@ public static class Gamepad
 
 	private static void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
 	{
-		float x = 0.0f;
-		float y = 0.0f;
-
 		int dash = 0;
 		int jump = 0;
 		SerialPort sp = (SerialPort)sender;
@@ -59,19 +57,25 @@ public static class Gamepad
 			if (Mathf.Abs(x) < DEAD_ZONE) x = 0.0f;
 			if (Mathf.Abs(y) < DEAD_ZONE) y = 0.0f;
 		}
+		_joystick = new Vector2(x, y).Limit(1.0f);
+		_actions = new int[] {dash, jump};
+	}
+
+	public static void Update()
+	{
+		if (Input.GetKey(Key.A))
+		{
+			x = -1.0f;
+		}
+		else if (Input.GetKey(Key.D))
+		{
+			x = 1.0f;
+		}
 		else
 		{
-			if (Input.GetKey(Key.A))
-			{
-				x = -1.0f;
-			}
-			else if (Input.GetKey(Key.D))
-			{
-				x = 1.0f;
-			}
+			x = 0.0f;
 		}
 
 		_joystick = new Vector2(x, y).Limit(1.0f);
-		_actions = new int[] {dash, jump};
 	}
 }
