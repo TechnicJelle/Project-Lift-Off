@@ -12,7 +12,6 @@ public static class Gamepad
 
     private static readonly SerialPort SerialPort;
     public static Vector2 _joystick { get; private set; }
-    public static int[] _actions { get; private set; }
 
 	static Gamepad()
 	{
@@ -24,14 +23,13 @@ public static class Gamepad
 			SerialPort.Open();
 			SerialPort.DataReceived += DataReceivedHandler;
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
 			Console.WriteLine("Using keyboard instead of custom gamepad");
 			SerialPort = null;
 		}
 
 		_joystick = new Vector2(0, 0);
-		_actions = new int[] {0, 0};
 	}
 
 	private static void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
@@ -39,8 +37,6 @@ public static class Gamepad
 		float x = 0.0f;
 		float y = 0.0f;
 
-		int dash = 0;
-		int jump = 0;
 		SerialPort sp = (SerialPort)sender;
 		// Console.WriteLine(sp.ReadLine());
 
@@ -54,24 +50,27 @@ public static class Gamepad
 			int valY = int.Parse(split[1].Trim());
 			x = Mathf.Map(valX, 0, 1023, -1.0f, 1.0f);
 			y = Mathf.Map(valY, 0, 1023, -1.0f, 1.0f);
-			dash = Int32.Parse(split[3]);
-			jump = Int32.Parse(split[4]);
 			if (Mathf.Abs(x) < DEAD_ZONE) x = 0.0f;
 			if (Mathf.Abs(y) < DEAD_ZONE) y = 0.0f;
 		}
-		else
+		_joystick = new Vector2(x, y).Limit(1.0f);
+	}
+
+	public static void Update()
+	{
+		if (SerialPort != null) return;
+
+		float x = 0.0f;
+
+		if (Input.GetKey(Key.A))
 		{
-			if (Input.GetKey(Key.A))
-			{
-				x = -1.0f;
-			}
-			else if (Input.GetKey(Key.D))
-			{
-				x = 1.0f;
-			}
+			x = -1.0f;
+		}
+		else if (Input.GetKey(Key.D))
+		{
+			x = 1.0f;
 		}
 
-		_joystick = new Vector2(x, y).Limit(1.0f);
-		_actions = new int[] {dash, jump};
+		_joystick = new Vector2(x, 0.0f).Limit(1.0f);
 	}
 }

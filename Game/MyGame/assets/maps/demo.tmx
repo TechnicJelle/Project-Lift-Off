@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="22" height="12" tilewidth="64" tileheight="64" infinite="0" nextlayerid="3" nextobjectid="29">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="22" height="12" tilewidth="64" tileheight="64" infinite="0" nextlayerid="3" nextobjectid="31">
  <objectgroup id="2" name="Objects">
-  <object id="4" name="Floor" type="MyGame.MyGame.Solids.Floor" x="0" y="704" width="1408" height="64"/>
-  <object id="5" name="Wall" type="MyGame.MyGame.Solids.Wall" x="-64" y="0" width="64" height="768"/>
-  <object id="6" name="Wall" type="MyGame.MyGame.Solids.Wall" x="1408" y="0" width="64" height="768"/>
-  <object id="8" name="Platform" type="MyGame.MyGame.Solids.Platform" x="320" y="512" width="256" height="64"/>
-  <object id="9" name="Platform" type="MyGame.MyGame.Solids.Platform" x="192" y="320" width="1024" height="64"/>
-  <object id="10" name="Platform" type="MyGame.MyGame.Solids.Platform" x="0" y="128" width="192" height="64"/>
-  <object id="12" name="Platform" type="MyGame.MyGame.Solids.Platform" x="1152" y="576" width="256" height="128"/>
-  <object id="14" name="Walker" type="MyGame.MyGame.Entities.Enemy" x="576" y="256" width="64" height="64"/>
-  <object id="16" name="Platform" type="MyGame.MyGame.Solids.Platform" x="1024" y="256" width="128" height="64"/>
-  <object id="17" name="Roof" type="MyGame.MyGame.Solids.Roof" x="0" y="-64" width="1408" height="64"/>
-  <object id="18" name="Platform" type="MyGame.MyGame.Solids.Platform" x="896" y="192" width="128" height="128"/>
-  <object id="19" name="Walker" type="MyGame.MyGame.Entities.Enemy" x="192" y="640" width="64" height="64"/>
-  <object id="20" name="Walker" type="MyGame.MyGame.Entities.Enemy" x="896" y="640" width="64" height="64"/>
-  <object id="11" name="Player" type="MyGame.MyGame.Entities.Player" x="704" y="640" width="64" height="64"/>
+  <object id="4" name="Solid" type="MyGame.MyGame.Solid" x="0" y="704" width="1408" height="64"/>
+  <object id="5" name="SolidClimbable" type="MyGame.MyGame.SolidClimbable" x="-64" y="0" width="64" height="768"/>
+  <object id="6" name="SolidClimbable" type="MyGame.MyGame.SolidClimbable" x="1408" y="0" width="64" height="768"/>
+  <object id="8" name="Solid" type="MyGame.MyGame.Solid" x="320" y="512" width="256" height="64"/>
+  <object id="9" name="SolidClimbable" type="MyGame.MyGame.SolidClimbable" x="192" y="320" width="1024" height="64"/>
+  <object id="10" name="Solid" type="MyGame.MyGame.Solid" x="0" y="128" width="192" height="64"/>
+  <object id="12" name="Solid" type="MyGame.MyGame.Solid" x="1152" y="576" width="256" height="128"/>
+  <object id="16" name="Solid" type="MyGame.MyGame.Solid" x="1024" y="256" width="128" height="64"/>
+  <object id="17" name="Solid" type="MyGame.MyGame.Solid" x="0" y="-64" width="1408" height="64"/>
+  <object id="18" name="Solid" type="MyGame.MyGame.Solid" x="896" y="192" width="128" height="128"/>
+  <object id="14" name="Walker" type="MyGame.MyGame.Entities.Enemy" x="576" y="192" width="64" height="64"/>
+  <object id="19" name="Walker" type="MyGame.MyGame.Entities.Enemy" x="192" y="576" width="64" height="64"/>
+  <object id="20" name="Walker" type="MyGame.MyGame.Entities.Enemy" x="896" y="576" width="64" height="64"/>
+  <object id="11" name="Player" type="MyGame.MyGame.Entities.Player" x="704" y="576" width="64" height="64"/>
+  <object id="30" name="Walker" type="MyGame.MyGame.Entities.Enemy" x="896" y="448" width="64" height="64"/>
  </objectgroup>
 </map>
