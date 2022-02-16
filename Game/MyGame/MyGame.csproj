@@ -92,11 +92,8 @@
     <Compile Include="MyGame\Gamepad.cs" />
     <Compile Include="MyGame\Levels\Level.cs" />
     <Compile Include="MyGame\MyGame.cs" />
-    <Compile Include="MyGame\Solids\Floor.cs" />
-    <Compile Include="MyGame\Solids\Platform.cs" />
-    <Compile Include="MyGame\Solids\Roof.cs" />
-    <Compile Include="MyGame\Solids\Solid.cs" />
-    <Compile Include="MyGame\Solids\Wall.cs" />
+    <Compile Include="MyGame\Solid.cs" />
+    <Compile Include="MyGame\SolidClimbable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

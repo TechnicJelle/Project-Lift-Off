@@ -2,13 +2,14 @@
 using GXPEngine.Core;
 using TiledMapParser;
 
-namespace MyGame.MyGame.Solids;
+namespace MyGame.MyGame;
 
 public class Solid : AnimationSprite
 {
-	protected Solid(TiledObject obj) : this(new Vector2(obj.X, obj.Y), new Vector2(obj.Width, obj.Height))
+	// ReSharper disable once MemberCanBeProtected.Global
+	public Solid(TiledObject obj) : this(new Vector2(obj.X, obj.Y), new Vector2(obj.Width, obj.Height))
 	{
-
+		//Empty
 	}
 
 	public Solid(Vector2 p, Vector2 s, bool addToGame = true) : base("colors.png", 1, 1)

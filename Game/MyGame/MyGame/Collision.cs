@@ -1,7 +1,6 @@
 ﻿using GXPEngine;
 using GXPEngine.Core;
 using MyGame.MyGame.Entities;
-using MyGame.MyGame.Solids;
 
 namespace MyGame.MyGame;
 

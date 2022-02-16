@@ -7,7 +7,7 @@ namespace MyGame.MyGame;
 
 public class MyGame : Game
 {
-	public const bool DEBUG_MODE = true;
+	public const bool DEBUG_MODE = false;
 	public static EasyDraw DebugCanvas;
 	public static Level Level;
 
@@ -36,7 +36,6 @@ public class MyGame : Game
 	// For every game object, Update is called every frame, by the engine:
 	private void Update()
 	{
-		Console.WriteLine("--- Frame Start ---");
 		Gamepad.Update();
 
 		if (DEBUG_MODE)

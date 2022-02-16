@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GXPEngine;
-using MyGame.MyGame.Solids;
 using TiledMapParser;
 
 namespace MyGame.MyGame.Levels;
@@ -19,7 +17,6 @@ public class Level : GameObject
 		Solids = new List<Solid>();
 		foreach (GameObject gameObject in game.GetChildren())
 		{
-			Console.WriteLine(gameObject + " : " + (gameObject is Solid));
 			if (gameObject is Solid solid)
 			{
 				Solids.Add(solid);

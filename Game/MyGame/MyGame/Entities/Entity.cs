@@ -1,7 +1,6 @@
 ﻿using System;
 using GXPEngine;
 using GXPEngine.Core;
-using MyGame.MyGame.Solids;
 
 namespace MyGame.MyGame.Entities;
 
@@ -9,7 +8,9 @@ public class Entity : Solid
 {
 	//Variables for the designers:
 	private const float DRAG_MULTIPLIER = 0.9f;
-	private const float WALL_SLIDE_DRAG_MULTIPLIER = 0.5f;
+	private const float FLOOR_WALK_DRAG_MULTIPLIER = 0.9f;
+	private const float WALL_SLIDE_DRAG_MULTIPLIER = 0.2f;
+	private const float PLATFORM_CLIMB_ASSIST_MULTIPLIER = 1.4f;
 	private readonly Vector2 _gravity = new(0.0f, 2.5f);
 
 	//Physics variables
@@ -36,7 +37,6 @@ public class Entity : Solid
 	protected void ApplyForce(Vector2 f)
 	{
 		_acc.Add(f.Copy());
-		// if (this.GetType() == typeof(Player)) Console.WriteLine("+acc: " + _acc);
 	}
 
 	protected new void Update()
@@ -46,10 +46,7 @@ public class Entity : Solid
 
 
 		_vel.Add(_acc);
-		// if(this.GetType() == typeof(Player)) Console.WriteLine("facc: " + _acc);
 		_vel.Mult(DRAG_MULTIPLIER);
-
-		if (this.GetType() == typeof(Player)) Console.WriteLine("bvel: " + _vel); //Before the collision check, the y velocity is good.
 
 		//Collision calculations
 		CollidingWithFloor = false;
@@ -59,17 +56,45 @@ public class Entity : Solid
 			Collision c = Collision.DynamicRectVsRect(this, solidInLevel);
 			if (c.Result)
 			{
-				// if (this.GetType() == typeof(Player)) Console.WriteLine(this + ": collision");
-				_vel.Add(Vector2.Mult(c.ContactNormal, new Vector2(Mathf.Abs(_vel.x), Mathf.Abs(_vel.y)))); //TODO: fix this y component always being made 0
-
-				// MyGame.DebugCanvas.Stroke(100, 100, 255);
-				// MyGame.DebugCanvas.StrokeWeight(2);
-				// MyGame.DebugCanvas.Line(c.ContactPoint.x, c.ContactPoint.y, c.ContactPoint.x + 100 * c.ContactNormal.x, c.ContactPoint.y + 100 * c.ContactNormal.y);
 				CollidingWithFloor = true;
+
+				_vel.Add(Vector2.Mult(c.ContactNormal,
+					new Vector2(Mathf.Abs(_vel.x), Mathf.Abs(_vel.y))));
+				switch (c.ContactNormal.y)
+				{
+					case < -0.1f:
+						_vel.x *= FLOOR_WALK_DRAG_MULTIPLIER;
+						break;
+					case > 0.1f:
+						Player plr = (Player) this;
+						plr.StopJump();
+						CollidingWithFloor = false;
+						break;
+				}
+
+				if (solidInLevel.GetType() == typeof(SolidClimbable))
+				{
+					if(Mathf.Abs(c.ContactNormal.x) > 0.1f)
+						_vel.y *= WALL_SLIDE_DRAG_MULTIPLIER;
+				}
+				else
+				{
+					if (_vel.y < 0)
+					{
+						_vel.y *= PLATFORM_CLIMB_ASSIST_MULTIPLIER;
+					}
+				}
+
+				if (MyGame.DEBUG_MODE)
+				{
+					MyGame.DebugCanvas.Stroke(255, 255, 0);
+					MyGame.DebugCanvas.StrokeWeight(2);
+					MyGame.DebugCanvas.Line(c.ContactPoint.x, c.ContactPoint.y,
+						c.ContactPoint.x + 30 * c.ContactNormal.x, c.ContactPoint.y + 30 * c.ContactNormal.y);
+				}
 			}
 		}
 
-		if (this.GetType() == typeof(Player)) Console.WriteLine("avel: " + _vel); //After the collision check, the y velocity has been reset to 0.
 		x += _vel.x;
 		y += _vel.y;
 
