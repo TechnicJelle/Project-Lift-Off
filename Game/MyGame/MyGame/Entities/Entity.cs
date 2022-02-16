@@ -53,45 +53,51 @@ public class Entity : Solid
 		foreach (Solid solidInLevel in MyGame.Level.Solids)
 		{
 			if (this == solidInLevel) continue; //don't collide with yourself!!!!!!
-			Collision c = Collision.DynamicRectVsRect(this, solidInLevel);
-			if (c.Result)
+
+			(bool isColliding, Vector2 contactPoint, Vector2 contactNormal, float tHitNear) = Collision.DynamicRectVsRect(this, solidInLevel);
+			if (!isColliding) continue; //if no collision
+			if (GetType() == typeof(Player) && solidInLevel.GetType() == typeof(Enemy)) //if you're a player, don't collide with enemies
 			{
-				CollidingWithFloor = true;
+				Player player = (Player) this;
+				player.CurrentlyCollidingWithEnemies.Add((Enemy)solidInLevel);
+				continue;
+			}
 
-				_vel.Add(Vector2.Mult(c.ContactNormal,
-					new Vector2(Mathf.Abs(_vel.x), Mathf.Abs(_vel.y))));
-				switch (c.ContactNormal.y)
-				{
-					case < -0.1f:
-						_vel.x *= FLOOR_WALK_DRAG_MULTIPLIER;
-						break;
-					case > 0.1f:
-						Player plr = (Player) this;
-						plr.StopJump();
-						CollidingWithFloor = false;
-						break;
-				}
+			CollidingWithFloor = true;
 
-				if (solidInLevel.GetType() == typeof(SolidClimbable))
-				{
-					if(Mathf.Abs(c.ContactNormal.x) > 0.1f)
-						_vel.y *= WALL_SLIDE_DRAG_MULTIPLIER;
-				}
-				else
-				{
-					if (_vel.y < 0)
-					{
-						_vel.y *= PLATFORM_CLIMB_ASSIST_MULTIPLIER;
-					}
-				}
+			_vel.Add(Vector2.Mult(contactNormal,
+				new Vector2(Mathf.Abs(_vel.x), Mathf.Abs(_vel.y))));
+			switch (contactNormal.y)
+			{
+				case < -0.1f:
+					_vel.x *= FLOOR_WALK_DRAG_MULTIPLIER;
+					break;
+				case > 0.1f:
+					Player plr = (Player) this;
+					plr.StopJump();
+					CollidingWithFloor = false;
+					break;
+			}
 
-				if (MyGame.DEBUG_MODE)
+			if (solidInLevel.GetType() == typeof(SolidClimbable))
+			{
+				if(Mathf.Abs(contactNormal.x) > 0.1f)
+					_vel.y *= WALL_SLIDE_DRAG_MULTIPLIER;
+			}
+			else
+			{
+				if (_vel.y < 0)
 				{
-					MyGame.DebugCanvas.Stroke(255, 255, 0);
-					MyGame.DebugCanvas.StrokeWeight(2);
-					MyGame.DebugCanvas.Line(c.ContactPoint.x, c.ContactPoint.y,
-						c.ContactPoint.x + 30 * c.ContactNormal.x, c.ContactPoint.y + 30 * c.ContactNormal.y);
+					_vel.y *= PLATFORM_CLIMB_ASSIST_MULTIPLIER;
 				}
+			}
+
+			if (MyGame.DEBUG_MODE)
+			{
+				MyGame.DebugCanvas.Stroke(255, 255, 0);
+				MyGame.DebugCanvas.StrokeWeight(2);
+				MyGame.DebugCanvas.Line(contactPoint.x, contactPoint.y,
+					contactPoint.x + 30 * contactNormal.x, contactPoint.y + 30 * contactNormal.y);
 			}
 		}
 
