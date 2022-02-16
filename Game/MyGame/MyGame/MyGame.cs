@@ -36,6 +36,7 @@ public class MyGame : Game
 	// For every game object, Update is called every frame, by the engine:
 	private void Update()
 	{
+		Console.WriteLine("--- Frame Start ---");
 		Gamepad.Update();
 
 		if (DEBUG_MODE)

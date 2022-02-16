@@ -31,6 +31,10 @@ public class Solid : AnimationSprite
 		game.AddChild(this);
 	}
 
+	/// <summary>
+	/// Gets the coordinates of the Top-Left of the object.
+	/// </summary>
+	/// <returns>Vector2 with X and Y coordinates</returns>
 	public Vector2 GetPos()
 	{
 		return new Vector2(x - width/2.0f, y - height/2.0f);
@@ -52,6 +56,7 @@ public class Solid : AnimationSprite
 			MyGame.DebugCanvas.Rect(GetPos().x, GetPos().y, width, height);
 			MyGame.DebugCanvas.Fill(255, 0, 0);
 			MyGame.DebugCanvas.NoStroke();
+			MyGame.DebugCanvas.ShapeAlign(CenterMode.Center, CenterMode.Center);
 			MyGame.DebugCanvas.Ellipse(GetPos().x, GetPos().y, 16, 16);
 		}
 	}
