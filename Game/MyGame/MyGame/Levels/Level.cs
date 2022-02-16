@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using GXPEngine;
 using TiledMapParser;
 
@@ -10,10 +10,9 @@ public class Level : GameObject
 
 	public readonly List<Solid> Solids;
 
-	public Level()
+	public Level(string path)
 	{
-		_tiledLoader = new TiledLoader("../../assets/maps/demo.tmx");
-		CreateLevel();
+		_tiledLoader = new TiledLoader($"../../{path}");
 		Solids = new List<Solid>();
 		foreach (GameObject gameObject in game.GetChildren())
 		{

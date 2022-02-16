@@ -11,9 +11,10 @@ public class MyGame : Game
 	public static EasyDraw DebugCanvas;
 	public static Level Level;
 
-	private MyGame() : base(1408, 768, false, false, pPixelArt: true)
+	private MyGame() : base(1366, 768, false, false, pPixelArt: true)
 	{
 		targetFps = 60;
+		LevelManager levelManager = new();
 
 		Sprite background = new("background.png")
 		{
@@ -21,15 +22,15 @@ public class MyGame : Game
 			height = height,
 		};
 		AddChild(background);
-		Level = new Level();
-		AddChild(Level);
+    
+		levelManager.Init();
 
 		if (DEBUG_MODE)
 		{
 			DebugCanvas = new EasyDraw(width, height);
 			AddChild(DebugCanvas);
 		}
-
+		
 		Console.WriteLine("MyGame initialized");
 	}
 

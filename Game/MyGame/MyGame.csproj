@@ -37,6 +37,10 @@
     <Reference Include="NetCoreSerial, Version=1.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NetCoreSerial.1.3.2\lib\netstandard2.0\NetCoreSerial.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Ports, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -90,6 +94,7 @@
     <Compile Include="MyGame\Entities\Entity.cs" />
     <Compile Include="MyGame\Entities\Player.cs" />
     <Compile Include="MyGame\Gamepad.cs" />
+    <Compile Include="MyGame\LevelManager.cs" />
     <Compile Include="MyGame\Levels\Level.cs" />
     <Compile Include="MyGame\MyGame.cs" />
     <Compile Include="MyGame\Solid.cs" />
