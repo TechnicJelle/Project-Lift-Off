@@ -38,7 +38,7 @@ public class Player : Entity
 	//Hold to jump higher:
 	private bool _jumping;
 	private int _millisAtStartJump;
-	private int _millisSinceLastDash;
+	public int _millisSinceLastDash;
 
 	//Dash:
 	private int _millisAtLastDash;
@@ -65,6 +65,7 @@ public class Player : Entity
 
 		//Basic Left/Right Movement
 		const float detail = 100.0f;
+		// Console.WriteLine(Gamepad._joystick.x);
 		float xMovement = Mathf.Clamp(Gamepad._joystick.x, -detail, detail) / detail;
 		ApplyForce(Vector2.Mult(new Vector2(xMovement, 0), PLAYER_MOVEMENT_SPEED));
 

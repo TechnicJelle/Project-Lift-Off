@@ -94,6 +94,7 @@
     <Compile Include="MyGame\MyGame.cs" />
     <Compile Include="MyGame\Solid.cs" />
     <Compile Include="MyGame\SolidClimbable.cs" />
+    <Compile Include="MyGame\UI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

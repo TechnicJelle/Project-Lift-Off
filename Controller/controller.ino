@@ -26,9 +26,9 @@ void readJoystick() {
 }
 
 void readClicks() {
-  if(digitalRead(jumpPin) == LOW) {
+  if(digitalRead(jumpPin) == HIGH) {
     Keyboard.press('w');
-  } else if(digitalRead(dashPin) == LOW) {
+  } else if(digitalRead(dashPin) == HIGH) {
     Keyboard.press(KEY_LEFT_SHIFT);
   } else {
     Keyboard.releaseAll();
@@ -36,6 +36,7 @@ void readClicks() {
 }
 
 void loop() {
+  digitalRead(jumpPin);
   readJoystick();
   readClicks();
 }

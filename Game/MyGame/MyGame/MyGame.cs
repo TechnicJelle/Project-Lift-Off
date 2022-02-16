@@ -9,6 +9,7 @@ public class MyGame : Game
 {
 	public const bool DEBUG_MODE = false;
 	public static EasyDraw DebugCanvas;
+	// ReSharper disable once InconsistentNaming
 	public static Level Level;
 
 	private MyGame() : base(1408, 768, false, false, pPixelArt: true)
@@ -24,6 +25,8 @@ public class MyGame : Game
 		Level = new Level();
 		AddChild(Level);
 
+		UI.Init();
+
 		if (DEBUG_MODE)
 		{
 			DebugCanvas = new EasyDraw(width, height);
@@ -36,7 +39,8 @@ public class MyGame : Game
 	// For every game object, Update is called every frame, by the engine:
 	private void Update()
 	{
-		Gamepad.Update();
+		// Gamepad.Update();
+		UI.Update();
 
 		if (DEBUG_MODE)
 		{
