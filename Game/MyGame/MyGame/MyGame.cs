@@ -7,8 +7,9 @@ namespace MyGame.MyGame;
 
 public class MyGame : Game
 {
-	public const bool DEBUG_MODE = true;
+	public const bool DEBUG_MODE = false;
 	public static EasyDraw DebugCanvas;
+	public static Level Level;
 
 	private MyGame() : base(1366, 768, false, false, pPixelArt: true)
 	{
@@ -21,8 +22,8 @@ public class MyGame : Game
 			height = height,
 		};
 		AddChild(background);
+    
 		levelManager.Init();
-		
 
 		if (DEBUG_MODE)
 		{
@@ -36,9 +37,12 @@ public class MyGame : Game
 	// For every game object, Update is called every frame, by the engine:
 	private void Update()
 	{
+		Gamepad.Update();
+
 		if (DEBUG_MODE)
 		{
 			DebugCanvas.ClearTransparent();
+			// Console.WriteLine(GetDiagnostics());
 		}
 	}
 

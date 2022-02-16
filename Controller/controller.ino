@@ -1,7 +1,5 @@
-//const int JOYSTICK_BUTTON_PIN =  2;
-//const int          X_AXIS_PIN = A1;
-//const int          Y_AXIS_PIN = A0;
-//
+#include <Keyboard.h>
+
 const int joystickClick = 2;
 const int joystickX = A1;
 const int joystickY = A0;
@@ -9,30 +7,35 @@ const int joystickY = A0;
 const int jumpPin = 8;
 const int dashPin = 7;
 
-bool isJumping = false;
-bool lastJump = false;
-
 void setup() {
   Serial.begin( 9600 );
-  pinMode(8, INPUT);
-  pinMode(7, INPUT);
+  pinMode(jumpPin, INPUT_PULLUP);
+  pinMode(dashPin, INPUT_PULLUP);
+
+  Keyboard.begin();
 }
 
-void loop() {
-
-  isJumping = digitalRead(jumpPin);
-    
+void readJoystick() {
   Serial.print(analogRead(joystickX), DEC);
   Serial.print(",");
   Serial.print(analogRead(joystickY), DEC);
   Serial.print(",");
   Serial.print(digitalRead(joystickClick));
-  Serial.print(",");
-  Serial.print(isJumping != lastJump);
-  Serial.print(",");
-  Serial.print(digitalRead(dashPin));
   Serial.print("\n");
   delay(15);
+}
 
-  lastJump = isJumping;
+void readClicks() {
+  if(digitalRead(jumpPin) == LOW) {
+    Keyboard.press('w');
+  } else if(digitalRead(dashPin) == LOW) {
+    Keyboard.press(KEY_LEFT_SHIFT);
+  } else {
+    Keyboard.releaseAll();
+  }
+}
+
+void loop() {
+  readJoystick();
+  readClicks();
 }

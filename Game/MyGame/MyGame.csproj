@@ -89,6 +89,7 @@
     <Compile Include="GXPEngine\FMOD\FMODSoundSystem.cs" />
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
+    <Compile Include="MyGame\Collision.cs" />
     <Compile Include="MyGame\Entities\Enemy.cs" />
     <Compile Include="MyGame\Entities\Entity.cs" />
     <Compile Include="MyGame\Entities\Player.cs" />
@@ -96,11 +97,8 @@
     <Compile Include="MyGame\LevelManager.cs" />
     <Compile Include="MyGame\Levels\Level.cs" />
     <Compile Include="MyGame\MyGame.cs" />
-    <Compile Include="MyGame\Solids\Floor.cs" />
-    <Compile Include="MyGame\Solids\Platform.cs" />
-    <Compile Include="MyGame\Solids\Roof.cs" />
-    <Compile Include="MyGame\Solids\Solid.cs" />
-    <Compile Include="MyGame\Solids\Wall.cs" />
+    <Compile Include="MyGame\Solid.cs" />
+    <Compile Include="MyGame\SolidClimbable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -117,6 +117,11 @@ namespace GXPEngine.Core
 			return this;
 		}
 
+		public Vector2 Mult(Vector2 a)
+		{
+			return new Vector2(a.x * x, a.y * y);
+		}
+
 		public static Vector2 Mult(Vector2 v, float n, Vector2 target = null) {
 			if (target == null) {
 				target = new Vector2(v.x*n, v.y*n);
