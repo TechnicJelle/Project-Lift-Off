@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using GXPEngine;
+using MyGame.MyGame.Entities;
 using MyGame.MyGame.Levels;
 using Newtonsoft.Json.Linq;
 
@@ -52,6 +53,13 @@ public class LevelManager
 				level.Solids.Add(solid);
 			}
 		}
+
+		//Cursed reordering:
+		Player player = Game.main.FindObjectOfType<Player>();
+		Console.WriteLine("PLAYER FOUND!!!!" + player);
+		level.Solids.Remove(player);
+		level.Solids.Insert(0, player);
+		level.Player = player;
 
 		_lastLevel = _levels[levelName];
 	}

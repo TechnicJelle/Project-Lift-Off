@@ -1,20 +1,8 @@
-using System;
-using GXPEngine;
-using GXPEngine.Core;
-using TiledMapParser;
-
 namespace MyGame.MyGame.Entities;
 
-public class Enemy : Entity
-{
-	private const byte ANIMATION_DELAY = 200;
+public class Enemy : Entity {
 
-	protected Enemy(TiledObject obj, int health) : base("evilBarry.png", 4, 2, 7, health, ANIMATION_DELAY, true)
+	protected Enemy(string filename, int cols, int rows, int frames, int health) : base(filename, cols, rows, frames, health)
 	{
-	}
-
-	public void Bonk()
-	{
-		Console.WriteLine(this + " bonque " + Utils.Random(0, 10));
 	}
 }

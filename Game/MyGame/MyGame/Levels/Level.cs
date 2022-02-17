@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GXPEngine;
+using MyGame.MyGame.Entities;
 using TiledMapParser;
 
 namespace MyGame.MyGame.Levels;
@@ -8,7 +9,9 @@ public class Level : GameObject
 {
 	private readonly TiledLoader _tiledLoader;
 
-	public List<Solid> Solids = new();
+	public readonly List<Solid> Solids = new();
+
+	public Player Player;
 
 	public int _totalWaves { private set; get; }
 	public int _currentWave { private set; get; }
@@ -17,6 +20,12 @@ public class Level : GameObject
 	{
 		_tiledLoader = new TiledLoader($"../../{path}", game);
 		// Solids = new List<Solid>();
+	}
+
+	public void RemoveEntity(Entity e)
+	{
+		game.RemoveChild(e);
+		Solids.Remove(e);
 	}
 
 	public void CreateLevel()

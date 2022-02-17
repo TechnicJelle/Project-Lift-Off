@@ -12,15 +12,19 @@ public class Entity : Solid
 	private const float WALL_SLIDE_DRAG_MULTIPLIER = 0.2f;
 	private const float PLATFORM_CLIMB_ASSIST_MULTIPLIER = 1.4f;
 	private readonly Vector2 _gravity = new(0.0f, 2.5f);
+	protected virtual int MILLIS_BETWEEN_DAMAGES() { return 500; }
 
 	//Physics variables
 	public Vector2 _vel { get; }
 	private readonly Vector2 _acc;
+	protected bool ApplyGravity = true;
 
 	//Collision variables
 	protected bool CollidingWithFloor;
 
 	private int _health;
+	private bool _invincible;
+	private int _millisAtLastDamage;
 
 	protected Entity(string filename, int cols, int rows, int frames, int health,
 		byte animationDelay = 1, bool keepInCache = false, bool addCollider = true) :
@@ -44,8 +48,9 @@ public class Entity : Solid
 
 	protected new void Update()
 	{
+		if (Time.time - _millisAtLastDamage > MILLIS_BETWEEN_DAMAGES()) _invincible = false;
 		Animate(Time.deltaTime);
-		ApplyForce(_gravity);
+		if (ApplyGravity) ApplyForce(_gravity);
 
 
 		_vel.Add(_acc);
@@ -59,11 +64,13 @@ public class Entity : Solid
 			if (this == solidInLevel) continue; //don't collide with yourself!!!!!!
 
 			(bool isColliding, Vector2 contactPoint, Vector2 contactNormal, float tHitNear) = Collision.DynamicRectVsRect(this, solidInLevel);
+
 			if (!isColliding) continue; //if no collision
-			if (this is Player player && solidInLevel is Enemy enemy) //if you're a player, don't collide with enemies
+			if (!(this is Drone && solidInLevel is Drone)) //drones should collide with each other
 			{
-				player.CurrentlyCollidingWithEnemies.Add(enemy);
-				continue;
+				if (this is Enemy && solidInLevel is Enemy) continue; //enemies don't collide with enemies
+				if (this is Enemy && solidInLevel is Player) continue; //enemies don't collide with player
+				if (this is Player && solidInLevel is Enemy) continue; //player doesn't collide with enemies
 			}
 
 			CollidingWithFloor = true;
@@ -73,19 +80,20 @@ public class Entity : Solid
 			switch (contactNormal.y)
 			{
 				case < -0.1f:
-					_vel.x *= FLOOR_WALK_DRAG_MULTIPLIER;
+					CollidedWithFloor();
 					break;
 				case > 0.1f:
-					Player plr = (Player) this;
-					plr.StopJump();
-					CollidingWithFloor = false;
+					CollidedWithCeiling();
 					break;
 			}
 
-			if (solidInLevel.GetType() == typeof(SolidClimbable))
+			if (Mathf.Abs(contactNormal.x) > 0.1f)
 			{
-				if(Mathf.Abs(contactNormal.x) > 0.1f)
+				CollidedWithSide(contactNormal);
+				if (solidInLevel is SolidClimbable)
+				{
 					_vel.y *= WALL_SLIDE_DRAG_MULTIPLIER;
+				}
 			}
 			else
 			{
@@ -93,6 +101,16 @@ public class Entity : Solid
 				{
 					_vel.y *= PLATFORM_CLIMB_ASSIST_MULTIPLIER;
 				}
+			}
+
+			if (_invincible)
+			{
+				float b = Mathf.Map(Time.time - _millisAtLastDamage, 0, MILLIS_BETWEEN_DAMAGES(), 0, 1); //TODO: Designer, make this blink
+				SetColor(b, b, b);
+			}
+			else
+			{
+				SetColor(1, 1, 1);
 			}
 
 			if (MyGame.DEBUG_MODE)
@@ -122,17 +140,34 @@ public class Entity : Solid
 		base.Update();
 	}
 
-	protected virtual void TakeDamage(int amount = 1, Vector2 directionOfAttack = null)
+	protected virtual void CollidedWithSide(Vector2 normal)
 	{
+	}
+
+	protected virtual void CollidedWithFloor()
+	{
+		_vel.x *= FLOOR_WALK_DRAG_MULTIPLIER;
+	}
+
+	protected virtual void CollidedWithCeiling()
+	{
+	}
+
+	public virtual bool TakeDamage(Vector2 directionOfAttack, int amount = 1)
+	{
+		if (_invincible) return false;
+		_invincible = true;
+		_millisAtLastDamage = Time.time;
 		_health -= amount;
 		if (_health <= 0)
 			Die();
 		ApplyForce(directionOfAttack);
+		return true;
 	}
 
 	private void Die()
 	{
-		Console.WriteLine(this + " oof");
-		Game.main.RemoveChild(this);
+		// Console.WriteLine(this + " oof");
+		MyGame.LevelManager.CurrentLevel().RemoveEntity(this);
 	}
 }
