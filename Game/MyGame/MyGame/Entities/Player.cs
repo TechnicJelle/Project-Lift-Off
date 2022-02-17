@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using GXPEngine;
 using GXPEngine.Core;
@@ -40,21 +40,14 @@ public class Player : Entity
 	//Hold to jump higher:
 	private bool _jumping;
 	private int _millisAtStartJump;
-	private int _millisSinceLastDash;
 
 	//Dash:
 	private int _millisAtLastDash;
+	private int _millisSinceLastDash;
 
 	public List<Enemy> CurrentlyCollidingWithEnemies;
 
-	public Player(Vector2 spawnPos) :
-		base("playerIdle.png", 8, 2, 12, IDLE_ANIMATION_DELAY)
-	{
-		x = spawnPos.x;
-		y = spawnPos.y;
-	}
-
-	public Player(TiledObject obj) : base("playerIdle.png", 8, 2, 12, IDLE_ANIMATION_DELAY)
+	public Player(TiledObject obj) : base("playerIdle.png", 8, 2, 12, MyGame.PLAYER_HEALTH, IDLE_ANIMATION_DELAY)
 	{
 		//Empty
 	}
@@ -68,16 +61,9 @@ public class Player : Entity
 
 		//Basic Left/Right Movement
 		const float detail = 100.0f;
+		// Console.WriteLine(Gamepad._joystick.x);
 		float xMovement = Mathf.Clamp(Gamepad._joystick.x, -detail, detail) / detail;
 		ApplyForce(Vector2.Mult(new Vector2(xMovement, 0), PLAYER_MOVEMENT_SPEED));
-
-		//Dashing movement
-		if (MyGame.DEBUG_MODE) MyGame.DebugCanvas.Text("" + _millisSinceLastDash);
-		_millisSinceLastDash = Time.time - _millisAtLastDash;
-		if (Input.GetKeyDown(Key.LEFT_SHIFT) || Input.GetMouseButtonDown(1))
-		{
-			RequestDash(Gamepad._joystick);
-		}
 
 		// Console.WriteLine(Gamepad._actions[0] + "," + Gamepad._actions[1]);
 		//Jumping Movement
@@ -92,6 +78,11 @@ public class Player : Entity
 		if ((CollidingWithFloor || _jumpAmounts < MAX_JUMPS) && (Input.GetKeyDown(Key.W) || Input.GetKeyDown(Key.SPACE) || Input.GetMouseButtonDown(0)))
 		{
 			StartJump();
+		}
+
+		if (Input.GetKeyDown(Key.Y))
+		{
+			if(MyGame.DEBUG_MODE) TakeDamage(1, new Vector2(-10, 0)); //TODO: actually call this form the right place
 		}
 
 		if (_jumping)
@@ -121,7 +112,18 @@ public class Player : Entity
 		base.Update();
 
 		if (CurrentlyCollidingWithEnemies.Count > 0)
-			_millisAtLastDash = 0;
+			_millisAtLastDash = Time.time - MILLIS_BETWEEN_DASHES;
+
+		//Dashing movement
+		_millisSinceLastDash = Time.time - _millisAtLastDash;
+		if (Input.GetKeyDown(Key.LEFT_SHIFT) || Input.GetMouseButtonDown(1))
+		{
+			RequestDash(Gamepad._joystick);
+		}
+
+		float dashCooldown = Mathf.Map(Mathf.Clamp(MILLIS_BETWEEN_DASHES - _millisSinceLastDash, 0, MILLIS_BETWEEN_DASHES), 0, MILLIS_BETWEEN_DASHES, 0, 1);
+
+		UI.Canvas.Text("Dash Cooldown: " + dashCooldown); //TODO: Designer, make this into Arc
 	}
 
 	private void StartJump()
@@ -158,6 +160,13 @@ public class Player : Entity
 	{
 		_millisAtLastDash = Time.time;
 		ApplyForce(Vector2.Mult(direction.Copy().Normalize(), DASH_FORCE));
+		MyGame.AddScore(10);
+	}
+
+	protected override void TakeDamage(int amount = 1, Vector2 directionOfAttack = null)
+	{
+		UI.ReduceHearts(amount);
+		base.TakeDamage(amount, directionOfAttack);
 	}
 
 	private void Attack(Vector2 direction)
