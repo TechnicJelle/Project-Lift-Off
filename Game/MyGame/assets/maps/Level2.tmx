@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.8" tiledversion="1.8.0" orientation="orthogonal" renderorder="right-down" width="22" height="12" tilewidth="64" tileheight="64" infinite="0" nextlayerid="8" nextobjectid="55">
+ <layer id="1" name="Tile Layer 1" width="22" height="12">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjALsAAAEIAAB
+  </data>
+ </layer>
+ <objectgroup id="2" name="Objects">
+  <object id="4" name="Solid" type="Platform" x="320" y="576" width="192" height="192"/>
+  <object id="5" name="Solid" type="MyGame.MyGame.Solid" x="0" y="320" width="320" height="64"/>
+  <object id="6" name="Solid" type="MyGame.MyGame.Solid" x="1088" y="320" width="320" height="64"/>
+  <object id="7" name="SolidClimbable" type="MyGame.MyGame.SolidClimbable" x="1408" y="0" width="64" height="768"/>
+  <object id="8" name="SolidClimbable" type="MyGame.MyGame.SolidClimbable" x="-64" y="0" width="64" height="768"/>
+  <object id="9" name="Solid" type="MyGame.MyGame.Solid" x="0" y="768" width="1408" height="64"/>
+  <object id="10" name="Solid" type="MyGame.MyGame.Solid" x="0" y="-64" width="1408" height="64"/>
+  <object id="14" name="Solid" type="MyGame.MyGame.Solid" x="512" y="320" width="320" height="64"/>
+  <object id="15" name="Solid" type="MyGame.MyGame.Solid" x="256" y="128" width="320" height="64"/>
+  <object id="16" name="Solid" type="MyGame.MyGame.Solid" x="960" y="640" width="256" height="128"/>
+  <object id="17" name="Player" type="MyGame.MyGame.Entities.Player" x="640" y="672" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup id="3" name="5000">
+  <object id="18" name="Walker" type="MyGames.MyGames.Entities.Walker" x="320" y="32" width="64" height="64"/>
+  <object id="21" name="Walker" type="MyGames.MyGames.Entities.Walker" x="1152" y="544" width="64" height="64"/>
+  <object id="23" name="Drone" type="MyGames.MyGames.Entities.Drone" x="1344" y="192" width="64" height="64"/>
+  <object id="26" name="Drone" type="MyGames.MyGames.Entities.Drone" x="0" y="448" width="64" height="64"/>
+  <object id="27" name="Drone" type="MyGames.MyGames.Entities.Drone" x="128" y="640" width="64" height="64"/>
+  <object id="28" name="Walker" type="MyGames.MyGames.Entities.Walker" x="768" y="224" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup id="4" name="15000">
+  <object id="30" name="Turret" type="MyGames.MyGames.Entities.Turret" x="0" y="64" width="64" height="64"/>
+  <object id="31" name="Drone" type="MyGames.MyGames.Entities.Drone" x="64" y="224" width="64" height="64"/>
+  <object id="32" name="Drone" type="MyGames.MyGames.Entities.Drone" x="896" y="64" width="64" height="64"/>
+  <object id="33" name="Walker" type="MyGames.MyGames.Entities.Walker" x="320" y="480" width="64" height="64"/>
+  <object id="34" name="Turret" type="MyGames.MyGames.Entities.Turret" x="1344" y="640" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup id="5" name="25000">
+  <object id="35" name="Walker" type="MyGames.MyGames.Entities.Walker" x="64" y="672" width="64" height="64"/>
+  <object id="36" name="Turret" type="MyGames.MyGames.Entities.Turret" x="0" y="448" width="64" height="64"/>
+  <object id="38" name="Walker" type="MyGames.MyGames.Entities.Walker" x="1152" y="192" width="64" height="64"/>
+  <object id="39" name="Walker" type="MyGames.MyGames.Entities.Walker" x="448" y="32" width="64" height="64"/>
+  <object id="41" name="Turret" type="MyGames.MyGames.Entities.Turret" x="832" y="320" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup id="6" name="35000">
+  <object id="42" name="Drone" type="MyGames.MyGames.Entities.Drone" x="704" y="512" width="64" height="64"/>
+  <object id="43" name="Drone" type="MyGames.MyGames.Entities.Drone" x="1216" y="448" width="64" height="64"/>
+  <object id="44" name="Drone" type="MyGames.MyGames.Entities.Drone" x="128" y="448" width="64" height="64"/>
+  <object id="45" name="Drone" type="MyGames.MyGames.Entities.Drone" x="640" y="64" width="64" height="64"/>
+  <object id="46" name="Drone" type="MyGames.MyGames.Entities.Drone" x="1088" y="128" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup id="7" name="45000">
+  <object id="49" name="Turret" type="MyGames.MyGames.Entities.Turret" x="0" y="576" width="64" height="64"/>
+  <object id="50" name="Turret" type="MyGames.MyGames.Entities.Turret" x="1344" y="448" width="64" height="64"/>
+  <object id="51" name="Turret" type="MyGames.MyGames.Entities.Turret" x="0" y="192" width="64" height="64"/>
+  <object id="52" name="Walker" type="MyGames.MyGames.Entities.Walker" x="576" y="224" width="64" height="64"/>
+  <object id="53" name="Walker" type="MyGames.MyGames.Entities.Walker" x="960" y="544" width="64" height="64"/>
+  <object id="54" name="Walker" type="MyGames.MyGames.Entities.Walker" x="192" y="224" width="64" height="64"/>
+ </objectgroup>
+</map>
