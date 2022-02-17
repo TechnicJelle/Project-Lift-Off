@@ -8,25 +8,18 @@ public class Level : GameObject
 {
 	private readonly TiledLoader _tiledLoader;
 
-	public readonly List<Solid> Solids;
+	public List<Solid> Solids = new();
 
 	public int _totalWaves { private set; get; }
 	public int _currentWave { private set; get; }
 
 	public Level(string path)
 	{
-		_tiledLoader = new TiledLoader($"../../{path}");
-		Solids = new List<Solid>();
-		foreach (GameObject gameObject in game.GetChildren())
-		{
-			if (gameObject is Solid solid)
-			{
-				Solids.Add(solid);
-			}
-		}
+		_tiledLoader = new TiledLoader($"../../{path}", game);
+		// Solids = new List<Solid>();
 	}
 
-	private void CreateLevel()
+	public void CreateLevel()
 	{
 		_tiledLoader.autoInstance = true;
 

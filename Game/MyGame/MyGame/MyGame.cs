@@ -11,15 +11,14 @@ public class MyGame : Game
 
 	public const bool DEBUG_MODE = true;
 	public static EasyDraw DebugCanvas;
-	// ReSharper disable once InconsistentNaming
-	public static Level Level;
+	public static LevelManager LevelManager;
 
 	private static int _score;
 	
 	private MyGame() : base(1366, 768, false, false, pPixelArt: true)
 	{
 		targetFps = 60;
-		LevelManager levelManager = new();
+		LevelManager = new();
 
 		Sprite background = new("background.png")
 		{
@@ -27,8 +26,7 @@ public class MyGame : Game
 			height = height,
 		};
 		AddChild(background);
-    
-		levelManager.Init();
+		LevelManager.Init();
 
 		UI.Init();
 

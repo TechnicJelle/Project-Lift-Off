@@ -37,17 +37,24 @@ public class LevelManager
 
     public void Init()
     {
-        SetLevel("test");
+        SetLevel("demo");
     }
 
     public void SetLevel(string levelName)
     {
         if (_lastLevel != null) _game.RemoveChild(_lastLevel);
 
-        var level = _levels[levelName];
+        Level level = _levels[levelName];
         level.CreateLevel();
         
         _game.AddChild(level);
+        foreach (GameObject gameObject in _game.GetChildren())
+        {
+            if (gameObject is Solid solid)
+            {
+                level.Solids.Add(solid);
+            }
+        }
 
         _lastLevel = _levels[levelName];
     }
@@ -58,5 +65,10 @@ public class LevelManager
         {
             _game.RemoveChild(level);
         }
+    }
+
+    public Level CurrentLevel()
+    {
+        return _lastLevel;
     }
 }

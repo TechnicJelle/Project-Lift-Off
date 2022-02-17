@@ -11,6 +11,8 @@ public class Player : Entity
 	//Variables for the designers:
 	//General:
 	private const float PLAYER_MOVEMENT_SPEED = 100.0f;
+	private const float ATTACK_REACH = 100.0f;
+	private const float ATTACK_CONE = Mathf.HALF_PI;
 
 	//Animation
 	private const byte IDLE_ANIMATION_DELAY = 100;
@@ -101,6 +103,11 @@ public class Player : Entity
 			if(MyGame.DEBUG_MODE) Console.WriteLine("jumping with force of " + jumpForce + ". jump progress: " + jumpProgress);
 		}
 
+		if (Input.GetKeyDown(Key.E))
+		{
+			Attack(_vel);
+		}
+
 		//Actually calculate and apply the forces that have been acting on the Player the past frame]
 		base.Update();
 
@@ -160,5 +167,22 @@ public class Player : Entity
 	{
 		UI.ReduceHearts(amount);
 		base.TakeDamage(amount, directionOfAttack);
+	}
+
+	private void Attack(Vector2 direction)
+	{
+		Vector2 playerPos = new(x, y);
+		foreach (Enemy e in game.FindObjectsOfType<Enemy>())
+		{
+			Vector2 enemyPos = new(e.x, e.y);
+
+			if (Vector2.Dist(playerPos, enemyPos) > ATTACK_REACH) continue; //Out of reach
+
+			Vector2 toTarget = Vector2.Sub(enemyPos, playerPos);
+			float angleBetween = Vector2.AngleBetween(direction, toTarget);
+			if (angleBetween > ATTACK_CONE) continue; //Not in angle range
+
+			e.Bonk();
+		}
 	}
 }
