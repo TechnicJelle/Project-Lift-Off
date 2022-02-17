@@ -1,4 +1,5 @@
 ﻿using System;
+using GXPEngine;
 using GXPEngine.Core;
 using TiledMapParser;
 
@@ -21,6 +22,6 @@ public class Enemy : Entity
 
 	public void Bonk()
 	{
-		Console.WriteLine("bonque");
+		Console.WriteLine(this + " bonque " + Utils.Random(0, 10));
 	}
 }

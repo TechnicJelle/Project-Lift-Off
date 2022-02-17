@@ -114,7 +114,7 @@ public class Player : Entity
 
 		if (Input.GetKeyDown(Key.E))
 		{
-			this.Attack(_vel);
+			Attack(_vel);
 		}
 
 		//Actually calculate and apply the forces that have been acting on the Player the past frame]
@@ -162,17 +162,18 @@ public class Player : Entity
 
 	private void Attack(Vector2 direction)
 	{
-		Vector2 playerPos = new Vector2(x, y);
-		// List<Vector2> enemyPositions = new();
+		Vector2 playerPos = new(x, y);
 		foreach (Enemy e in game.FindObjectsOfType<Enemy>())
 		{
-			// Console.WriteLine(e.ToString());
-			Vector2 enemyPos = new Vector2(e.x, e.y);
+			Vector2 enemyPos = new(e.x, e.y);
 
-			if (Vector2.Dist(playerPos, enemyPos) < ATTACK_REACH)
-			{
-				e.Bonk();
-			}
+			if (Vector2.Dist(playerPos, enemyPos) > ATTACK_REACH) continue; //Out of reach
+
+			Vector2 toTarget = Vector2.Sub(enemyPos, playerPos);
+			float angleBetween = Vector2.AngleBetween(direction, toTarget);
+			if (angleBetween > ATTACK_CONE) continue; //Not in angle range
+
+			e.Bonk();
 		}
 	}
 }
