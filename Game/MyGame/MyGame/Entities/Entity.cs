@@ -1,5 +1,4 @@
-﻿using System;
-using GXPEngine;
+﻿using GXPEngine;
 using GXPEngine.Core;
 
 namespace MyGame.MyGame.Entities;

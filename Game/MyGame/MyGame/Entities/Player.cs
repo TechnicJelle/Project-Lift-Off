@@ -11,6 +11,7 @@ public class Player : Entity
 	//Variables for the designers:
 	//Movement:
 	private const float PLAYER_MOVEMENT_SPEED = 100.0f;
+	private const float DASH_THRESHOLD = 30.0f; //sorry ;-;
 
 	//Attack:
 	private const float ATTACK_REACH = 200.0f;
@@ -69,7 +70,7 @@ public class Player : Entity
 				_currentlyCollidingWithEnemies.Add(enemy);
 		}
 
-		bool isDashing = _vel.MagSq() > 30.0f;
+		bool isDashing = _vel.MagSq() > DASH_THRESHOLD;
 		// Console.WriteLine(this._vel.MagSq() > PLAYER_MOVEMENT_SPEED * PLAYER_MOVEMENT_SPEED * 1.1);
 		// Console.WriteLine(_vel.MagSq());
 		// SetAnimationDelay((byte) Mathf.Map(_vel.MagSq(), 0, 200, 255, 50));

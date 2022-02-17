@@ -65,6 +65,11 @@ namespace GXPEngine.Core
 			return Mathf.Sqrt(x*x + y*y);
 		}
 
+		public static float Mag(Vector2 v)
+		{
+			return Mathf.Sqrt(v.x * v.x + v.y * v.y);
+		}
+
 		public float MagSq() {
 			return x*x + y*y;
 		}
@@ -186,15 +191,15 @@ namespace GXPEngine.Core
 			return this;
 		}
 
-		public Vector2 Normalize(Vector2 target) {
+		public static Vector2 Normalize(Vector2 target) {
 			if (target == null) {
 				target = new Vector2();
 			}
-			float m = Mag();
+			float m = Mag(target);
 			if (m > 0) {
-				target.Set(x/m, y/m);
+				target = new Vector2(target.x/m, target.y/m);
 			} else {
-				target.Set(x, y);
+				target.Set(target.x, target.y);
 			}
 			return target;
 		}
@@ -212,7 +217,8 @@ namespace GXPEngine.Core
 			return this;
 		}
 
-		public Vector2 SetMag(Vector2 target, float len) {
+		public static Vector2 SetMag(Vector2 inp, float len) {
+			Vector2 target = inp.Copy();
 			target = Normalize(target);
 			target.Mult(len);
 			return target;
