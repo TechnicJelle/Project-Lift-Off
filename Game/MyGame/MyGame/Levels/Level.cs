@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using GXPEngine;
 using TiledMapParser;
 
@@ -13,10 +13,9 @@ public class Level : GameObject
 	public int _totalWaves { private set; get; }
 	public int _currentWave { private set; get; }
 
-	public Level()
+	public Level(string path)
 	{
-		_tiledLoader = new TiledLoader("../../assets/maps/demo.tmx");
-		CreateLevel();
+		_tiledLoader = new TiledLoader($"../../{path}");
 		Solids = new List<Solid>();
 		foreach (GameObject gameObject in game.GetChildren())
 		{

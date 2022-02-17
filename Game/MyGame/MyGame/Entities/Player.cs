@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using GXPEngine;
 using GXPEngine.Core;
@@ -45,13 +45,14 @@ public class Player : Entity
 
 	public List<Enemy> CurrentlyCollidingWithEnemies;
 
-	public Player(TiledObject obj) : base("playerDash.png", 6, 1, 6, MyGame.PLAYER_HEALTH, IDLE_ANIMATION_DELAY)
+	public Player(TiledObject obj) : base("playerIdle.png", 8, 2, 12, MyGame.PLAYER_HEALTH, IDLE_ANIMATION_DELAY)
 	{
 		//Empty
 	}
 
 	private new void Update()
 	{
+
 		CurrentlyCollidingWithEnemies = new List<Enemy>();
 		// Console.WriteLine(_vel.MagSq());
 		// SetAnimationDelay((byte) Mathf.Map(_vel.MagSq(), 0, 200, 255, 50));
