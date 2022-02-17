@@ -44,8 +44,8 @@ public class Player : Entity
 	//Dash:
 	private int _millisAtLastDash;
 	private int _millisSinceLastDash;
-	
-	
+
+
 	public List<Enemy> CurrentlyCollidingWithEnemies;
 
 	public Player(TiledObject obj) : base("player.png", 16, 5, 64, MyGame.PLAYER_HEALTH, IDLE_ANIMATION_DELAY)
@@ -64,7 +64,7 @@ public class Player : Entity
 
 		//Basic Left/Right Movement
 		const float detail = 100.0f;
-		
+
 		Gamepad.Update();
 		float xMovement = Mathf.Clamp(Gamepad._joystick.x, -detail, detail) / detail;
 		ApplyForce(Vector2.Mult(new Vector2(xMovement, 0), PLAYER_MOVEMENT_SPEED));
@@ -84,11 +84,11 @@ public class Player : Entity
 		//Dashing movement
 		if (MyGame.DEBUG_MODE) MyGame.DebugCanvas.Text("" + _millisSinceLastDash);
 		_millisSinceLastDash = Time.time - _millisAtLastDash;
-		if (Input.GetKeyDown(Key.LEFT_SHIFT) || Input.GetMouseButtonDown(1) || Gamepad._actions[0] == 1)
+		if (Input.GetKeyDown(Key.LEFT_SHIFT) || Input.GetMouseButtonDown(1))
 		{
 			RequestDash(Gamepad._joystick);
 		}
-		
+
 		// Console.WriteLine(Gamepad._actions[0] + "," + Gamepad._actions[1]);
 		//Jumping Movement
 		if (_inAir && CollidingWithFloor)

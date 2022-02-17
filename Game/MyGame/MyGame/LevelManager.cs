@@ -46,7 +46,7 @@ public class LevelManager
 
         Level level = _levels[levelName];
         level.CreateLevel();
-        
+
         _game.AddChild(level);
         foreach (GameObject gameObject in _game.GetChildren())
         {
