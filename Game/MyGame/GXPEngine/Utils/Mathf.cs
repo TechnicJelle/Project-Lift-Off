@@ -10,9 +10,10 @@ namespace GXPEngine
 		/// <summary>
 		/// Constant PI
 		/// </summary>
-		public const float PI = (float)Math.PI;
-		public const float TWO_PI = (float)(Math.PI * 2.0);
-		public const float HALF_PI = (float)(Math.PI / 2.0);
+		public const float PI = (float) Math.PI;
+		public const float HALF_PI = (float) (Math.PI * 0.5);
+		public const float ONE_AND_HALF_PI = (float) (Math.PI * 1.5);
+		public const float TWO_PI = (float) (Math.PI * 2.0);
 
 		/// <summary>
 		/// Returns the absolute value of specified number
