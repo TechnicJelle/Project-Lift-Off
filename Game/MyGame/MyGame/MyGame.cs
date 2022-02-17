@@ -1,6 +1,5 @@
 using System;
 using GXPEngine;
-using MyGame.MyGame.Levels;
 
 namespace MyGame.MyGame;
 
@@ -14,11 +13,11 @@ public class MyGame : Game
 	public static LevelManager LevelManager;
 
 	private static int _score;
-	
-	private MyGame() : base(1366, 768, false, false, pPixelArt: true)
+
+	private MyGame() : base(1408, 768, false, false, pPixelArt: true)
 	{
 		targetFps = 60;
-		LevelManager = new();
+		LevelManager = new LevelManager();
 
 		Sprite background = new("background.png")
 		{
@@ -35,7 +34,7 @@ public class MyGame : Game
 			DebugCanvas = new EasyDraw(width, height);
 			AddChild(DebugCanvas);
 		}
-		
+
 		Console.WriteLine("MyGame initialized");
 	}
 

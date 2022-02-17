@@ -1,5 +1,4 @@
-﻿using System;
-using GXPEngine;
+﻿using GXPEngine;
 
 namespace MyGame.MyGame;
 
@@ -35,7 +34,7 @@ public static class UI
 	{
 		Canvas.ClearTransparent();
 
-		Canvas.Text("Wave: " +  MyGame.Level._currentWave + "/" + MyGame.Level._totalWaves, Game.main.width - 100, 200); //TODO: Designer
+		Canvas.Text("Wave: " +  MyGame.LevelManager.CurrentLevel()._currentWave + "/" + MyGame.LevelManager.CurrentLevel()._totalWaves, Game.main.width - 100, 200); //TODO: Designer
 	}
 
 	public static void ReduceHearts(int amount = 1)
