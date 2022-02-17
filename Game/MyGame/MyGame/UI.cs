@@ -1,20 +1,47 @@
-﻿using GXPEngine;
+﻿using System;
+using GXPEngine;
 
 namespace MyGame.MyGame;
 
 // ReSharper disable once InconsistentNaming
 public static class UI
 {
-	private static EasyDraw _canvas;
+	private const string HEART_IMAGE = "circle.png";
+
+	private static int _playerHealth = MyGame.PLAYER_HEALTH;
+
+	public static EasyDraw Canvas;
+	private static Sprite[] _hearts;
 
 	public static void Init()
 	{
-		_canvas = new EasyDraw(Game.main.width, Game.main.height);
-		Game.main.AddChild(_canvas);
+		Canvas = new EasyDraw(Game.main.width, Game.main.height);
+		Game.main.AddChild(Canvas);
+
+		Sprite heartImage = new(HEART_IMAGE);
+
+		_hearts = new Sprite[MyGame.PLAYER_HEALTH];
+		for (int i = 0; i < _hearts.Length; i++)
+		{
+			Game.main.AddChild(_hearts[i] = new Sprite(HEART_IMAGE, false, false)
+			{
+				x = 300 + i * (heartImage.width + 30),
+				y = 30,
+			});
+		}
 	}
 
 	public static void Update()
 	{
-		_canvas.Ellipse(100,100, 50, 70);
+		Canvas.ClearTransparent();
+	}
+
+	public static void ReduceHearts(int amount = 1)
+	{
+		_playerHealth -= amount;
+		for (int i = 0; i < _hearts.Length; i++)
+		{
+			_hearts[i].visible = i < _playerHealth;
+		}
 	}
 }

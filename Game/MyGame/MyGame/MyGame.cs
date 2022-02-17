@@ -7,10 +7,14 @@ namespace MyGame.MyGame;
 
 public class MyGame : Game
 {
-	public const bool DEBUG_MODE = false;
+	public const int PLAYER_HEALTH = 3;
+
+	public const bool DEBUG_MODE = true;
 	public static EasyDraw DebugCanvas;
 	// ReSharper disable once InconsistentNaming
 	public static Level Level;
+
+	private static int _score;
 
 	private MyGame() : base(1408, 768, false, false, pPixelArt: true)
 	{
@@ -39,7 +43,7 @@ public class MyGame : Game
 	// For every game object, Update is called every frame, by the engine:
 	private void Update()
 	{
-		// Gamepad.Update();
+		Gamepad.Update();
 		UI.Update();
 
 		if (DEBUG_MODE)
@@ -47,6 +51,15 @@ public class MyGame : Game
 			DebugCanvas.ClearTransparent();
 			// Console.WriteLine(GetDiagnostics());
 		}
+
+		AddScore(1);
+
+		UI.Canvas.Text("Score: " + _score, 100, 100); //TODO: Designer
+	}
+
+	public static void AddScore(int additionAmount)
+	{
+		_score += additionAmount;
 	}
 
 	private static void Main()
