@@ -11,6 +11,8 @@ public class Player : Entity
 	//Variables for the designers:
 	//General:
 	private const float PLAYER_MOVEMENT_SPEED = 100.0f;
+	private const float ATTACK_REACH = 100.0f;
+	private const float ATTACK_CONE = Mathf.HALF_PI;
 
 	//Animation
 	private const byte IDLE_ANIMATION_DELAY = 100;
@@ -110,6 +112,11 @@ public class Player : Entity
 			if(MyGame.DEBUG_MODE) Console.WriteLine("jumping with force of " + jumpForce + ". jump progress: " + jumpProgress);
 		}
 
+		if (Input.GetKeyDown(Key.E))
+		{
+			this.Attack(_vel);
+		}
+
 		//Actually calculate and apply the forces that have been acting on the Player the past frame]
 		base.Update();
 
@@ -151,5 +158,21 @@ public class Player : Entity
 	{
 		_millisAtLastDash = Time.time;
 		ApplyForce(Vector2.Mult(direction.Copy().Normalize(), DASH_FORCE));
+	}
+
+	private void Attack(Vector2 direction)
+	{
+		Vector2 playerPos = new Vector2(x, y);
+		// List<Vector2> enemyPositions = new();
+		foreach (Enemy e in game.FindObjectsOfType<Enemy>())
+		{
+			// Console.WriteLine(e.ToString());
+			Vector2 enemyPos = new Vector2(e.x, e.y);
+
+			if (Vector2.Dist(playerPos, enemyPos) < ATTACK_REACH)
+			{
+				e.Bonk();
+			}
+		}
 	}
 }

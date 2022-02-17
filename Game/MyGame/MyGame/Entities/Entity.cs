@@ -50,7 +50,8 @@ public class Entity : Solid
 
 		//Collision calculations
 		CollidingWithFloor = false;
-		foreach (Solid solidInLevel in MyGame.Level.Solids)
+		// Console.WriteLine(MyGame.LevelManager.CurrentLevel().Solids.Count);
+		foreach (Solid solidInLevel in MyGame.LevelManager.CurrentLevel().Solids)
 		{
 			if (this == solidInLevel) continue; //don't collide with yourself!!!!!!
 

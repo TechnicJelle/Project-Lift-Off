@@ -1,4 +1,5 @@
-﻿using GXPEngine.Core;
+﻿using System;
+using GXPEngine.Core;
 using TiledMapParser;
 
 namespace MyGame.MyGame.Entities;
@@ -16,5 +17,10 @@ public class Enemy : Entity
 
 	public Enemy(TiledObject obj) : base("evilBarry.png", 4, 2, 7, ANIMATION_DELAY, true)
 	{
+	}
+
+	public void Bonk()
+	{
+		Console.WriteLine("bonque");
 	}
 }

@@ -9,12 +9,12 @@ public class MyGame : Game
 {
 	public const bool DEBUG_MODE = false;
 	public static EasyDraw DebugCanvas;
-	public static Level Level;
+	public static LevelManager LevelManager;
 
 	private MyGame() : base(1366, 768, false, false, pPixelArt: true)
 	{
 		targetFps = 60;
-		LevelManager levelManager = new();
+		LevelManager = new();
 
 		Sprite background = new("background.png")
 		{
@@ -22,9 +22,8 @@ public class MyGame : Game
 			height = height,
 		};
 		AddChild(background);
-    
-		levelManager.Init();
-
+		LevelManager.Init();
+		
 		if (DEBUG_MODE)
 		{
 			DebugCanvas = new EasyDraw(width, height);
