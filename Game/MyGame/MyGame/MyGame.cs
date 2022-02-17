@@ -7,14 +7,18 @@ namespace MyGame.MyGame;
 
 public class MyGame : Game
 {
-	public const bool DEBUG_MODE = false;
-	public static EasyDraw DebugCanvas;
-	public static Level Level;
+	public const int PLAYER_HEALTH = 3;
 
+	public const bool DEBUG_MODE = true;
+	public static EasyDraw DebugCanvas;
+	public static LevelManager LevelManager;
+
+	private static int _score;
+	
 	private MyGame() : base(1366, 768, false, false, pPixelArt: true)
 	{
 		targetFps = 60;
-		LevelManager levelManager = new();
+		LevelManager = new();
 
 		Sprite background = new("background.png")
 		{
@@ -22,8 +26,9 @@ public class MyGame : Game
 			height = height,
 		};
 		AddChild(background);
-    
-		levelManager.Init();
+		LevelManager.Init();
+
+		UI.Init();
 
 		if (DEBUG_MODE)
 		{
@@ -38,12 +43,22 @@ public class MyGame : Game
 	private void Update()
 	{
 		Gamepad.Update();
+		UI.Update();
 
 		if (DEBUG_MODE)
 		{
 			DebugCanvas.ClearTransparent();
 			// Console.WriteLine(GetDiagnostics());
 		}
+
+		AddScore(1);
+
+		UI.Canvas.Text("Score: " + _score, width - 100, 100); //TODO: Designer
+	}
+
+	public static void AddScore(int additionAmount)
+	{
+		_score += additionAmount;
 	}
 
 	private static void Main()

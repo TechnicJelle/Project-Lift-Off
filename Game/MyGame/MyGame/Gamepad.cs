@@ -18,7 +18,7 @@ public static class Gamepad
 		try
 		{
 			SerialPort = new SerialPort();
-			SerialPort.PortName = "COM3"; //Set your board COM
+			SerialPort.PortName = "COM7"; //Set your board COM
 			SerialPort.BaudRate = 9600;
 			SerialPort.Open();
 			SerialPort.DataReceived += DataReceivedHandler;
@@ -50,6 +50,7 @@ public static class Gamepad
 			int valY = int.Parse(split[1].Trim());
 			x = Mathf.Map(valX, 0, 1023, -1.0f, 1.0f);
 			y = Mathf.Map(valY, 0, 1023, -1.0f, 1.0f);
+			Console.WriteLine(x +", "+ y);
 			if (Mathf.Abs(x) < DEAD_ZONE) x = 0.0f;
 			if (Mathf.Abs(y) < DEAD_ZONE) y = 0.0f;
 		}
