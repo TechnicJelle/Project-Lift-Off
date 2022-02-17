@@ -65,7 +65,7 @@ public class Player : Entity
 		_currentlyCollidingWithEnemies = new List<Enemy>();
 		foreach (GameObject gameObject in cols)
 		{
-			if (gameObject is Enemy enemy)
+			if (gameObject is Enemy enemy && gameObject.visible)
 				_currentlyCollidingWithEnemies.Add(enemy);
 		}
 

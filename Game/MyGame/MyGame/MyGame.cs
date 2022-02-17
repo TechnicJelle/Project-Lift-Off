@@ -41,6 +41,7 @@ public class MyGame : Game
 	// For every game object, Update is called every frame, by the engine:
 	private void Update()
 	{
+		Console.WriteLine("------------------");
 		Gamepad.Update();
 		UI.Update();
 
@@ -53,10 +54,6 @@ public class MyGame : Game
 		AddScore(1);
 
 		UI.Canvas.Text("Score: " + _score, width - 100, 100); //TODO: Designer
-
-
-
-		Console.WriteLine(currentFps);
 	}
 
 	public static void AddScore(int additionAmount)

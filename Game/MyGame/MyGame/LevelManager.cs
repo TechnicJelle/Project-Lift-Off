@@ -40,7 +40,7 @@ public class LevelManager
 
 	public void SetLevel(string levelName)
 	{
-		if (_lastLevel != null) _game.RemoveChild(_lastLevel);
+		if (_lastLevel != null) RemoveLevel(_lastLevel);
 
 		Level level = _levels[levelName];
 		level.CreateLevel();
@@ -50,26 +50,34 @@ public class LevelManager
 		{
 			if (gameObject is Solid solid)
 			{
-				level.Solids.Add(solid);
+				solid.visible = true;
+				level.AddSolid(solid);
 			}
 		}
 
 		//Cursed reordering:
 		Player player = Game.main.FindObjectOfType<Player>();
 		Console.WriteLine("PLAYER FOUND!!!!" + player);
-		level.Solids.Remove(player);
-		level.Solids.Insert(0, player);
+		level.RemoveSolid(player);
+		level.InsertSolid(0, player);
 		level.Player = player;
 
 		_lastLevel = _levels[levelName];
+
+		var allSolids = level.GetAllSolids();
+		foreach (var solid in allSolids)
+		{
+			Console.WriteLine(solid.ToString());
+		}
 	}
 
-	public void ClearLevels()
+	private void RemoveLevel(Level level)
 	{
-		foreach (Level level in _levels.Values)
+		foreach (Solid solid in level.GetAllSolids())
 		{
-			_game.RemoveChild(level);
+			_game.RemoveChild(solid);
 		}
+		_game.RemoveChild(level);
 	}
 
 	public Level CurrentLevel()
