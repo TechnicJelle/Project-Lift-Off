@@ -54,7 +54,7 @@ public class MyGame : Game
 
 		AddScore(1);
 
-		UI.Canvas.Text("Score: " + _score, 100, 100); //TODO: Designer
+		UI.Canvas.Text("Score: " + _score, width - 100, 100); //TODO: Designer
 	}
 
 	public static void AddScore(int additionAmount)

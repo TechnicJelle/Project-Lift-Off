@@ -34,6 +34,8 @@ public static class UI
 	public static void Update()
 	{
 		Canvas.ClearTransparent();
+
+		Canvas.Text("Wave: " +  MyGame.Level._currentWave + "/" + MyGame.Level._totalWaves, Game.main.width - 100, 200); //TODO: Designer
 	}
 
 	public static void ReduceHearts(int amount = 1)

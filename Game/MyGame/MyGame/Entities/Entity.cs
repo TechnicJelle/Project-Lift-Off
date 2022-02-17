@@ -121,4 +121,18 @@ public class Entity : Solid
 		//Draw debug things:
 		base.Update();
 	}
+
+	protected virtual void TakeDamage(int amount = 1, Vector2 directionOfAttack = null)
+	{
+		_health -= amount;
+		if (_health <= 0)
+			Die();
+		ApplyForce(directionOfAttack);
+	}
+
+	private void Die()
+	{
+		Console.WriteLine(this + " oof");
+		Game.main.RemoveChild(this);
+	}
 }

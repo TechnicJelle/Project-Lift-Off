@@ -10,6 +10,9 @@ public class Level : GameObject
 
 	public readonly List<Solid> Solids;
 
+	public int _totalWaves { private set; get; }
+	public int _currentWave { private set; get; }
+
 	public Level()
 	{
 		_tiledLoader = new TiledLoader("../../assets/maps/demo.tmx");
@@ -31,5 +34,7 @@ public class Level : GameObject
 		_tiledLoader.LoadImageLayers();
 		_tiledLoader.LoadTileLayers();
 		_tiledLoader.LoadObjectGroups();
+		_totalWaves = 4; //TODO: Fill these two in with the actual right numbers
+		_currentWave = 2;
 	}
 }

@@ -79,7 +79,7 @@ public class Player : Entity
 
 		if (Input.GetKeyDown(Key.Y))
 		{
-			UI.ReduceHearts();
+			if(MyGame.DEBUG_MODE) TakeDamage(1, new Vector2(-10, 0)); //TODO: actually call this form the right place
 		}
 
 		if (_jumping)
@@ -153,5 +153,11 @@ public class Player : Entity
 		_millisAtLastDash = Time.time;
 		ApplyForce(Vector2.Mult(direction.Copy().Normalize(), DASH_FORCE));
 		MyGame.AddScore(10);
+	}
+
+	protected override void TakeDamage(int amount = 1, Vector2 directionOfAttack = null)
+	{
+		UI.ReduceHearts(amount);
+		base.TakeDamage(amount, directionOfAttack);
 	}
 }
