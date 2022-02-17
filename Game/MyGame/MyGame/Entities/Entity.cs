@@ -20,13 +20,16 @@ public class Entity : Solid
 	//Collision variables
 	protected bool CollidingWithFloor;
 
-	protected Entity(string filename, int cols, int rows, int frames,
+	private int _health;
+
+	protected Entity(string filename, int cols, int rows, int frames, int health,
 		byte animationDelay = 1, bool keepInCache = false, bool addCollider = true) :
 		base(filename, cols, rows, frames, keepInCache, addCollider)
 	{
 		SetAnimationDelay(animationDelay);
 		_vel = new Vector2(0.0f, 0.0f);
 		_acc = new Vector2(0.0f, 0.0f);
+		_health = health;
 	}
 
 	private void SetAnimationDelay(byte animationDelay)
@@ -117,5 +120,19 @@ public class Entity : Solid
 
 		//Draw debug things:
 		base.Update();
+	}
+
+	protected virtual void TakeDamage(int amount = 1, Vector2 directionOfAttack = null)
+	{
+		_health -= amount;
+		if (_health <= 0)
+			Die();
+		ApplyForce(directionOfAttack);
+	}
+
+	private void Die()
+	{
+		Console.WriteLine(this + " oof");
+		Game.main.RemoveChild(this);
 	}
 }
