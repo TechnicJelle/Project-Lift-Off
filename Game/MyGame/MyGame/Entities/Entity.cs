@@ -60,10 +60,9 @@ public class Entity : Solid
 
 			(bool isColliding, Vector2 contactPoint, Vector2 contactNormal, float tHitNear) = Collision.DynamicRectVsRect(this, solidInLevel);
 			if (!isColliding) continue; //if no collision
-			if (GetType() == typeof(Player) && solidInLevel.GetType() == typeof(Enemy)) //if you're a player, don't collide with enemies
+			if (this is Player player && solidInLevel is Enemy enemy) //if you're a player, don't collide with enemies
 			{
-				Player player = (Player) this;
-				player.CurrentlyCollidingWithEnemies.Add((Enemy)solidInLevel);
+				player.CurrentlyCollidingWithEnemies.Add(enemy);
 				continue;
 			}
 

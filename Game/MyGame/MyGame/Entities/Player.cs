@@ -55,20 +55,21 @@ public class Player : Entity
 
 	private new void Update()
 	{
-		bool isDashing = this._vel.MagSq() > PLAYER_MOVEMENT_SPEED * PLAYER_MOVEMENT_SPEED * 1.1;
+
+		CurrentlyCollidingWithEnemies = new List<Enemy>();
+
+		bool isDashing = _vel.MagSq() > PLAYER_MOVEMENT_SPEED * PLAYER_MOVEMENT_SPEED * 1.1;
 		// Console.WriteLine(this._vel.MagSq() > PLAYER_MOVEMENT_SPEED * PLAYER_MOVEMENT_SPEED * 1.1);
 		// Console.WriteLine(_vel.MagSq());
 		// SetAnimationDelay((byte) Mathf.Map(_vel.MagSq(), 0, 200, 255, 50));
 
-		CurrentlyCollidingWithEnemies = new List<Enemy>();
 
 		//Basic Left/Right Movement
 		const float detail = 100.0f;
-
-		Gamepad.Update();
+		// Console.WriteLine(Gamepad._joystick.x);
 		float xMovement = Mathf.Clamp(Gamepad._joystick.x, -detail, detail) / detail;
 		ApplyForce(Vector2.Mult(new Vector2(xMovement, 0), PLAYER_MOVEMENT_SPEED));
-		// Console.WriteLine(Gamepad._joystick.x);
+
 
 		if (xMovement != 0 && xMovement != 0 && !_inAir && !isDashing)
 		{
@@ -81,15 +82,6 @@ public class Player : Entity
 			this.AnimateFixed();
 		}
 
-		//Dashing movement
-		if (MyGame.DEBUG_MODE) MyGame.DebugCanvas.Text("" + _millisSinceLastDash);
-		_millisSinceLastDash = Time.time - _millisAtLastDash;
-		if (Input.GetKeyDown(Key.LEFT_SHIFT) || Input.GetMouseButtonDown(1))
-		{
-			RequestDash(Gamepad._joystick);
-		}
-
-		// Console.WriteLine(Gamepad._actions[0] + "," + Gamepad._actions[1]);
 		//Jumping Movement
 		if (_inAir && CollidingWithFloor)
 		{
