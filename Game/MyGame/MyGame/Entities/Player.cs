@@ -15,7 +15,7 @@ public class Player : Entity
 
 	//Attack:
 	private const float ATTACK_REACH = 200.0f;
-	private const float ATTACK_CONE = Mathf.PI;
+	private const float ATTACK_CONE = Mathf.HALF_PI;
 	private const float ATTACK_FORCE_STRENGTH = 10.0f;
 
 	//Animation:

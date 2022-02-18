@@ -8,37 +8,36 @@ public class Drone : Enemy
 {
 	private const float MOVEMENT_SPEED = 0.5f;
 	private const float EXPLOSION_RANGE = 100.0f;
+	private const float WALL_ASSIST = 0.2f;
 
-	private bool _exploding = false;
-
-	public Drone(TiledObject obj) : base("enemyDrone.png", 12, 2, 11, 1)
+	public Drone(TiledObject obj) : base("enemyDrone.png", 12, 2, 24, 1)
 	{
+		SetCycle(0, 11, 50);
+		AnimateFixed();
 		ApplyGravity = false;
 	}
 
 	protected new void Update()
 	{
+		base.Update();
+
 		Vector2 toTarget = Vector2.Sub(MyGame.LevelManager.CurrentLevel().Player.GetPos(), new Vector2(x, y));
 		ApplyForce(Vector2.SetMag(toTarget, MOVEMENT_SPEED));
-		if (_exploding)
-		{
-			if (_currentFrame >= 23) TakeDamage(new Vector2(0, 0));
-			Console.WriteLine(_currentFrame);
-		}
-		else
-		{
-			base.Update();
-		}
+
 		if (toTarget.MagSq() < EXPLOSION_RANGE * EXPLOSION_RANGE)
 			Explode();
 	}
 
+	protected override void CollidedWithSide(Vector2 normal)
+	{
+		_vel.y -= WALL_ASSIST;
+		base.CollidedWithSide(normal);
+	}
+
 	private void Explode()
 	{
-		_exploding = true;
 		MyGame.LevelManager.CurrentLevel().Player.TakeDamage(_vel);
-		SetCycle(12, 12, 4);
-		AnimateFixed();
-		Console.WriteLine("explode");
+		TakeDamage(new Vector2(0, 0));
+		game.AddChild(new DroneExplosion(GetPos()));
 	}
 }
