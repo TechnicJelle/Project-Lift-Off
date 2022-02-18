@@ -16,7 +16,7 @@ public static class SoundManager
 
 	public static void LoadAllSounds()
 	{
-		music = new Sound(PATH + "POL-lone-wolf-short.wav", true, true);
+		music = new Sound(PATH + "OST.wav", true, true);
 		jump = new Sound(PATH + "Dash.wav");
 		dash = new Sound(PATH + "jump.wav");
 		explosion = new Sound(PATH + "Explosion.wav");

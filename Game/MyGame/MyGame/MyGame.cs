@@ -36,7 +36,7 @@ public class MyGame : Game
 			AddChild(DebugCanvas);
 		}
 
-		SoundManager.music.Play(volume: 0.1f);
+		SoundManager.music.Play(volume: 0.5f);
 
 		Console.WriteLine("MyGame initialized");
 	}
