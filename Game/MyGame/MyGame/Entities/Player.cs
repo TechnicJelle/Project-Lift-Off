@@ -174,9 +174,17 @@ public class Player : Entity
 			RequestDash(Gamepad._joystick);
 		}
 
-		float dashCooldown = Mathf.Map(Mathf.Clamp(MILLIS_BETWEEN_DASHES - _millisSinceLastDash, 0, MILLIS_BETWEEN_DASHES), 0, MILLIS_BETWEEN_DASHES, 0, 1);
+		//Dash Cooldown UI
+		float dashCooldown = Mathf.Map(Mathf.Clamp(MILLIS_BETWEEN_DASHES - _millisSinceLastDash, 0, MILLIS_BETWEEN_DASHES), 0, MILLIS_BETWEEN_DASHES, 1, 0);
 
-		UI.Canvas.Text("Dash Cooldown: " + dashCooldown); //TODO: Designer, make this into Arc
+		const float size = 70;
+		UI.Canvas.TextAlign(CenterMode.Center, CenterMode.Max);
+		UI.Canvas.Text("Dash Cooldown", size * 1.1f, game.height);
+		UI.Canvas.NoStroke();
+		UI.Canvas.Fill(dashCooldown > 0.99f ? 255 : 0);
+		UI.Canvas.Arc(size * 1.1f, game.height - size * 1.1f, size, size, 0, dashCooldown * 360f);
+
+		//Player animation
 		this.Animate();
 	}
 

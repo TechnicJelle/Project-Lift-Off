@@ -24,8 +24,8 @@ public static class UI
 		{
 			Game.main.AddChild(_hearts[i] = new Sprite(HEART_IMAGE, false, false)
 			{
-				x = 300 + i * (heartImage.width + 30),
-				y = 30,
+				x = 10 + i * (heartImage.width + 30),
+				y = 10,
 			});
 		}
 	}
@@ -34,7 +34,7 @@ public static class UI
 	{
 		Canvas.ClearTransparent();
 
-		Canvas.Text("Wave: " +  MyGame.LevelManager.CurrentLevel()._currentWave + "/" + MyGame.LevelManager.CurrentLevel()._totalWaves, Game.main.width - 100, 200); //TODO: Designer
+		Text("Wave: " +  MyGame.LevelManager.CurrentLevel()._currentWave + "/" + MyGame.LevelManager.CurrentLevel()._totalWaves, Game.main.width, 32);
 	}
 
 	public static void ReduceHearts(int amount = 1)
@@ -44,5 +44,14 @@ public static class UI
 		{
 			_hearts[i].visible = i < _playerHealth;
 		}
+	}
+
+	public static void Text(string str, float x, float y)
+	{
+		Canvas.TextAlign(CenterMode.Max, CenterMode.Min);
+		Canvas.Fill(0, 150);
+		Canvas.Text(str, x+1, y+1);
+		Canvas.Fill(255);
+		Canvas.Text(str, x, y);
 	}
 }
