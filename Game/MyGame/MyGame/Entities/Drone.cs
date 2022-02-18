@@ -38,7 +38,7 @@ public class Drone : Enemy
 	private void Explode()
 	{
 		MyGame.LevelManager.CurrentLevel().Player.TakeDamage(_vel);
-		TakeDamage(new Vector2(0, 0));
+		TakeDamage();
 		game.AddChild(new DroneExplosion(GetPos()));
 		SoundManager.explosion.Play();
 	}

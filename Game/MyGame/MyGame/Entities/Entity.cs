@@ -65,6 +65,14 @@ public class Entity : Solid
 			(bool isColliding, Vector2 contactPoint, Vector2 contactNormal, float tHitNear) = Collision.DynamicRectVsRect(this, solidInLevel);
 
 			if (!isColliding) continue; //if no collision
+			if (this is Bullet && solidInLevel is Enemy or Bullet) continue; //bullets shouldn't collide with enemies and other bullets
+			if (this is Bullet bullet) //if bullet collides with anything else, bullet gets killed
+			{
+				if(solidInLevel is Player player) //when colliding with a player, though, also damage the player
+					player.TakeDamage(bullet._vel);
+				bullet.TakeDamage(silent:true);
+				continue;
+			}
 			if (!(this is Drone && solidInLevel is Drone)) //drones should collide with each other
 			{
 				if (this is Enemy && solidInLevel is Enemy) continue; //enemies don't collide with enemies
@@ -149,10 +157,11 @@ public class Entity : Solid
 	{
 	}
 
-	public virtual bool TakeDamage(Vector2 directionOfAttack, int amount = 1)
+	public virtual bool TakeDamage(Vector2 directionOfAttack = null, int amount = 1, bool silent = false)
 	{
+		if (directionOfAttack == null) return false;
 		if (_invincible) return false;
-		SoundManager.loseLife.Play();
+		if(!silent) SoundManager.loseLife.Play();
 		_invincible = true;
 		_millisAtLastDamage = Time.time;
 		_health -= amount;

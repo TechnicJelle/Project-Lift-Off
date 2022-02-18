@@ -218,6 +218,26 @@ namespace GXPEngine
 		{
 			return targetRangeStart + (targetRangeEnd - targetRangeStart) * ((value - baseRangeBegin) / (baseRangeEnd - baseRangeBegin));
 		}
+
+		/// <summary>
+		/// Converts radians into degrees
+		/// </summary>
+		/// <param name="radians">float radians</param>
+		/// <returns>float degrees</returns>
+		public static float Degrees(float radians)
+		{
+			return radians * 180.0f / PI;
+		}
+
+		/// <summary>
+		/// Converts degrees into radians
+		/// </summary>
+		/// <param name="degrees">float degrees</param>
+		/// <returns>float radians</returns>
+		public static float Radians(float degrees)
+		{
+			return degrees * PI / 180.0f;
+		}
 	}
 }
 

@@ -223,9 +223,9 @@ public class Player : Entity
 		MyGame.AddScore(10);
 	}
 
-	public override bool TakeDamage(Vector2 directionOfAttack, int amount = 1)
+	public override bool TakeDamage(Vector2 directionOfAttack = null, int amount = 1, bool silent = false)
 	{
-		if (!base.TakeDamage(directionOfAttack, amount)) return false;
+		if (!base.TakeDamage(directionOfAttack, amount, silent)) return false;
 		UI.ReduceHearts(amount);
 		return true;
 	}
