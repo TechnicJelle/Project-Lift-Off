@@ -97,7 +97,9 @@
     <Compile Include="MyGame\Entities\Entity.cs" />
     <Compile Include="MyGame\Entities\Player.cs" />
     <Compile Include="MyGame\Entities\Turret.cs" />
+    <Compile Include="MyGame\Entities\TurretExplosion.cs" />
     <Compile Include="MyGame\Entities\Walker.cs" />
+    <Compile Include="MyGame\Entities\WalkerExplosion.cs" />
     <Compile Include="MyGame\Gamepad.cs" />
     <Compile Include="MyGame\LevelManager.cs" />
     <Compile Include="MyGame\Levels\Level.cs" />

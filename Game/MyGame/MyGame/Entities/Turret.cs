@@ -1,5 +1,4 @@
-﻿using System;
-using GXPEngine;
+﻿using GXPEngine;
 using GXPEngine.Core;
 using TiledMapParser;
 
@@ -14,6 +13,8 @@ public class Turret : Enemy
 	public Turret(TiledObject obj) : base("enemyShooter.png", 18, 3, 18, 1, obj)
 	{
 		ApplyGravity = false;
+		SetCycle(0, 18, 80);
+		AnimateFixed();
 	}
 
 	protected new void Update()
@@ -29,5 +30,12 @@ public class Turret : Enemy
 		SoundManager.shooter.Play();
 		Vector2 toTarget = Vector2.Sub(MyGame.LevelManager.CurrentLevel().Player.GetPos(), new Vector2(x, y));
 		MyGame.LevelManager.CurrentLevel().AddSolid(new Bullet(x, y, toTarget));
+	}
+
+	protected override void Die()
+	{
+		game.AddChild(new TurretExplosion(GetPos()));
+		SoundManager.explosion.Play();
+		base.Die();
 	}
 }

@@ -175,7 +175,7 @@ public class Entity : Solid
 		return true;
 	}
 
-	private void Die()
+	protected virtual void Die()
 	{
 		// Console.WriteLine(this + " oof");
 		MyGame.LevelManager.CurrentLevel().RemoveEntity(this);

@@ -39,7 +39,12 @@ public class Drone : Enemy
 	{
 		MyGame.LevelManager.CurrentLevel().Player.TakeDamage(_vel);
 		TakeDamage();
+	}
+
+	protected override void Die()
+	{
 		game.AddChild(new DroneExplosion(GetPos()));
 		SoundManager.explosion.Play();
+		base.Die();
 	}
 }
