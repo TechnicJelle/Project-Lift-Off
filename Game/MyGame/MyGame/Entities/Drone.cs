@@ -7,7 +7,7 @@ namespace MyGame.MyGame.Entities;
 public class Drone : Enemy
 {
 	private const float MOVEMENT_SPEED = 0.5f;
-	private const float EXPLOSION_RANGE = 200.0f;
+	private const float EXPLOSION_RANGE = 100.0f;
 
 	private bool _exploding = false;
 
