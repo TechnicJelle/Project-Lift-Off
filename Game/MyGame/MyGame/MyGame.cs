@@ -11,6 +11,8 @@ public class MyGame : Game
 	public const bool DEBUG_MODE = true;
 	public static EasyDraw DebugCanvas;
 	public static LevelManager LevelManager;
+	public static SoundManager SoundManager;
+	public static SoundChannel Channel;
 
 	private static int _score;
 
@@ -18,6 +20,7 @@ public class MyGame : Game
 	{
 		targetFps = 60;
 		LevelManager = new LevelManager();
+		SoundManager = new SoundManager();
 
 		Sprite background = new("background0.png")
 		{
@@ -35,15 +38,19 @@ public class MyGame : Game
 			AddChild(DebugCanvas);
 		}
 
+		SoundManager.music.Play();
+
 		Console.WriteLine("MyGame initialized");
 	}
 
 	// For every game object, Update is called every frame, by the engine:
 	private void Update()
 	{
-		Console.WriteLine("------------------");
+		// Console.WriteLine("------------------");
 		Gamepad.Update();
 		UI.Update();
+
+		// Console.WriteLine(SoundManager.Channel.IsPlaying);
 
 		if (DEBUG_MODE)
 		{
