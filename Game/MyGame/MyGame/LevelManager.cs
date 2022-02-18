@@ -48,11 +48,9 @@ public class LevelManager
 		_game.AddChild(level);
 		foreach (GameObject gameObject in _game.GetChildren())
 		{
-			if (gameObject is Solid solid)
-			{
-				solid.visible = true;
-				level.AddSolid(solid);
-			}
+			if (gameObject is not Solid solid) continue;
+			solid.visible = true;
+			level.AddSolid(solid);
 		}
 
 		//Cursed reordering:

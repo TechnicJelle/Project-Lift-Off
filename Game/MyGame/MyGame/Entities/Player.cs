@@ -147,7 +147,6 @@ public class Player : Entity
 
 		if (_currentlyCollidingWithEnemies.Count > 0)
 		{
-			// Console.WriteLine("enemy colliding!! AUOWIE");
 			if (isDashing)
 			{
 				_millisAtLastDash = Time.time - MILLIS_BETWEEN_DASHES;
