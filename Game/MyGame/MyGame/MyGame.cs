@@ -11,8 +11,6 @@ public class MyGame : Game
 	public const bool DEBUG_MODE = true;
 	public static EasyDraw DebugCanvas;
 	public static LevelManager LevelManager;
-	public static SoundManager SoundManager;
-	public static SoundChannel Channel;
 
 	private static int _score;
 
@@ -20,7 +18,7 @@ public class MyGame : Game
 	{
 		targetFps = 60;
 		LevelManager = new LevelManager();
-		SoundManager = new SoundManager();
+		SoundManager.LoadAllSounds();
 
 		Sprite background = new("background0.png")
 		{
@@ -38,7 +36,7 @@ public class MyGame : Game
 			AddChild(DebugCanvas);
 		}
 
-		SoundManager.music.Play();
+		SoundManager.music.Play(volume: 0.1f);
 
 		Console.WriteLine("MyGame initialized");
 	}

@@ -180,6 +180,7 @@ public class Player : Entity
 
 	private void StartJump()
 	{
+		SoundManager.jump.Play();
 		_millisAtStartJump = Time.time;
 		_jumping = true;
 		_inAir = true;
@@ -212,6 +213,7 @@ public class Player : Entity
 
 	private void Dash(Vector2 direction)
 	{
+		SoundManager.dash.Play();
 		_millisAtLastDash = Time.time;
 		this.SetCycle(17, 5);
 		this.AnimateFixed();
