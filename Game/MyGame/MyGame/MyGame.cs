@@ -8,7 +8,7 @@ public class MyGame : Game
 {
 	public const int PLAYER_HEALTH = 3;
 
-	public const bool DEBUG_MODE = true;
+	public const bool DEBUG_MODE = false;
 	public static EasyDraw DebugCanvas;
 	public static LevelManager LevelManager;
 

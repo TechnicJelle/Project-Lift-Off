@@ -214,7 +214,7 @@ public class Player : Entity
 
 	private void Dash(Vector2 direction)
 	{
-		SoundManager.dash.Play();
+		SoundManager.dash.Play(volume: 0.6f);
 		_millisAtLastDash = Time.time;
 		this.SetCycle(17, 5);
 		this.AnimateFixed();

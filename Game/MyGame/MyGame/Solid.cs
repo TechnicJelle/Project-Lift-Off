@@ -1,4 +1,5 @@
-﻿using GXPEngine;
+﻿using System;
+using GXPEngine;
 using GXPEngine.Core;
 using TiledMapParser;
 
@@ -7,9 +8,47 @@ namespace MyGame.MyGame;
 public class Solid : AnimationSprite
 {
 	// ReSharper disable once MemberCanBeProtected.Global
-	public Solid(TiledObject obj) : this(new Vector2(obj.X, obj.Y), new Vector2(obj.Width, obj.Height))
+	public Solid(TiledObject obj) : this(new Vector2(obj.X, obj.Y), new Vector2(obj.Width, obj.Height), false)
 	{
-		//Empty
+		const float tolerance = 0.1f;
+		float w = obj.Width;
+		float h = obj.Height;
+		string filename = "barry";
+		if (Math.Abs(w - 128) < tolerance && Math.Abs(h - 128) < tolerance)
+		{
+			filename = Utils.Random(0, 100) < 50 ? "box2x2L" : "box2x2R";
+		}
+		else if (Math.Abs(w - 256) < tolerance && Math.Abs(h - 64) < tolerance)
+		{
+			filename = "platform4x1";
+		}
+		else if (Math.Abs(w - 1408) < tolerance && Math.Abs(h - 64) < tolerance)
+		{
+			filename = "platform22x1";
+		}
+		else if (Math.Abs(w - 1024) < tolerance && Math.Abs(h - 64) < tolerance)
+		{
+			filename = "platform16x1";
+		}
+		else if (Math.Abs(w - 128) < tolerance && Math.Abs(h - 64) < tolerance)
+		{
+			filename = "platform3x1";
+		}
+		else if (Math.Abs(w - 192) < tolerance && Math.Abs(h - 64) < tolerance)
+		{
+			filename = "platform3x1";
+		}
+		else if (Math.Abs(w - 256) < tolerance && Math.Abs(h - 128) < tolerance)
+		{
+			filename = "box1x1Mid";
+		}
+		else
+		{
+			Console.WriteLine(this + ": " + obj.Width + ", " + obj.Height);
+		}
+
+
+		initializeFromTexture(Texture2D.GetInstance(filename + ".png"));
 	}
 
 	public Solid(Vector2 p, Vector2 s, bool addToGame = true) : base("colors.png", 1, 1)

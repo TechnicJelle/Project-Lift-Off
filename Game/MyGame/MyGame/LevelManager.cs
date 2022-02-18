@@ -61,12 +61,6 @@ public class LevelManager
 		level.Player = player;
 
 		_lastLevel = _levels[levelName];
-
-		var allSolids = level.GetAllSolids();
-		foreach (var solid in allSolids)
-		{
-			Console.WriteLine(solid.ToString());
-		}
 	}
 
 	private void RemoveLevel(Level level)

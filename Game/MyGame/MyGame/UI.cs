@@ -5,7 +5,7 @@ namespace MyGame.MyGame;
 // ReSharper disable once InconsistentNaming
 public static class UI
 {
-	private const string HEART_IMAGE = "circle.png";
+	private const string HEART_IMAGE = "heart.png";
 
 	private static int _playerHealth = MyGame.PLAYER_HEALTH;
 

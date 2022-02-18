@@ -1,4 +1,3 @@
-using System;
 using GXPEngine;
 using TiledMapParser;
 
@@ -6,11 +5,11 @@ namespace MyGame.MyGame.Entities;
 
 public class Enemy : Entity
 {
-	private int _millisAtSpawn;
+	private readonly int _millisAtSpawn;
 
 	protected Enemy(string filename, int cols, int rows, int frames, int health, TiledObject obj) : base(filename, cols, rows, frames, health)
 	{
-		Console.WriteLine(obj.Name);
+		// Console.WriteLine(obj.Name);
 		// if ()
 		_millisAtSpawn = int.Parse(obj.Name);
 	}
