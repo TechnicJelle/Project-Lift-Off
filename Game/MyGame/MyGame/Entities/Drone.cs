@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using GXPEngine.Core;
 using TiledMapParser;
 
@@ -10,7 +10,7 @@ public class Drone : Enemy
 	private const float EXPLOSION_RANGE = 100.0f;
 	private const float WALL_ASSIST = 0.2f;
 
-	public Drone(TiledObject obj) : base("enemyDrone.png", 12, 2, 24, 1)
+	public Drone(TiledObject obj) : base("enemyDrone.png", 12, 2, 24, 1, obj)
 	{
 		SetCycle(0, 11, 50);
 		AnimateFixed();
@@ -19,8 +19,9 @@ public class Drone : Enemy
 
 	protected new void Update()
 	{
-		base.Update();
-
+		if (!base.Update()) return;
+		if (!this.visible || MyGame.LevelManager.CurrentLevel().Player == null) return;
+    
 		Vector2 toTarget = Vector2.Sub(MyGame.LevelManager.CurrentLevel().Player.GetPos(), new Vector2(x, y));
 		ApplyForce(Vector2.SetMag(toTarget, MOVEMENT_SPEED));
 

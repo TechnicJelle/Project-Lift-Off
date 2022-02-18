@@ -18,6 +18,7 @@ public class MyGame : Game
 	{
 		targetFps = 60;
 		LevelManager = new LevelManager();
+		SoundManager.LoadAllSounds();
 
 		Sprite background = new("background0.png")
 		{
@@ -35,14 +36,19 @@ public class MyGame : Game
 			AddChild(DebugCanvas);
 		}
 
+		SoundManager.music.Play(volume: 0.1f);
+
 		Console.WriteLine("MyGame initialized");
 	}
 
 	// For every game object, Update is called every frame, by the engine:
 	private void Update()
 	{
+		// Console.WriteLine("------------------");
 		Gamepad.Update();
 		UI.Update();
+
+		// Console.WriteLine(SoundManager.Channel.IsPlaying);
 
 		if (DEBUG_MODE)
 		{
