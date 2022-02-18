@@ -1,3 +1,7 @@
+using System;
+using GXPEngine;
+using TiledMapParser;
+
 namespace MyGame.MyGame.Entities;
 
 public class Enemy : Entity {
