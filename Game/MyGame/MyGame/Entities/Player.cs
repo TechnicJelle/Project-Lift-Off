@@ -53,6 +53,7 @@ public class Player : Entity
 
 	//Enemies:
 	private List<Enemy> _currentlyCollidingWithEnemies;
+	private bool _isAttacking;
 
 	public Player(TiledObject obj) : base("player.png", 16, 5, 64, MyGame.PLAYER_HEALTH, IDLE_ANIMATION_DELAY)
 	{
@@ -83,15 +84,13 @@ public class Player : Entity
 		ApplyForce(Vector2.Mult(new Vector2(xMovement, 0), PLAYER_MOVEMENT_SPEED));
 
 
-		if (xMovement != 0 && xMovement != 0 && !_inAir && !isDashing)
+		if (xMovement != 0 && !_inAir && !isDashing && !_isAttacking)
 		{
 			this.SetCycle(49, 5);
-			this.AnimateFixed();
 		}
-		else if (xMovement == 0 && !_inAir && !isDashing)
+		else if (xMovement == 0 && !_inAir && !isDashing && !_isAttacking)
 		{
 			this.SetCycle(0, 12);
-			this.AnimateFixed();
 		}
 
 		//Jumping Movement
@@ -133,7 +132,11 @@ public class Player : Entity
 
 		if (Input.GetKeyDown(Key.E) || Input.GetMouseButtonDown(0))
 		{
+			this._isAttacking = true;
+			this.SetCycle(65, 3, 255, true);
 			Attack(_vel);
+
+			// this._animationDelay = 1;
 		}
 
 
@@ -172,6 +175,7 @@ public class Player : Entity
 		float dashCooldown = Mathf.Map(Mathf.Clamp(MILLIS_BETWEEN_DASHES - _millisSinceLastDash, 0, MILLIS_BETWEEN_DASHES), 0, MILLIS_BETWEEN_DASHES, 0, 1);
 
 		UI.Canvas.Text("Dash Cooldown: " + dashCooldown); //TODO: Designer, make this into Arc
+		this.Animate();
 	}
 
 	private void StartJump()
@@ -237,6 +241,8 @@ public class Player : Entity
 
 			e.TakeDamage(_vel.Copy().SetMag(ATTACK_FORCE_STRENGTH));
 		}
+
+		this._isAttacking = false;
 	}
 
 	protected override void CollidedWithCeiling()
