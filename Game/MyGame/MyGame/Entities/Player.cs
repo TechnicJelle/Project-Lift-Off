@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using GXPEngine;
 using GXPEngine.Core;
 using TiledMapParser;
@@ -231,8 +232,9 @@ public class Player : Entity
 
 	private void Attack(Vector2 direction)
 	{
+		SoundManager.weaponSwoosh.Play();
 		Vector2 playerPos = new(x, y);
-		foreach (Enemy e in game.FindObjectsOfType<Enemy>())
+		foreach (Enemy e in MyGame.LevelManager.CurrentLevel().GetVisibleSolids().OfType<Enemy>())
 		{
 			Vector2 enemyPos = new(e.x, e.y);
 

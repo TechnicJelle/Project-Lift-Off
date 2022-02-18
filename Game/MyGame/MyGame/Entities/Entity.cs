@@ -152,6 +152,7 @@ public class Entity : Solid
 	public virtual bool TakeDamage(Vector2 directionOfAttack, int amount = 1)
 	{
 		if (_invincible) return false;
+		SoundManager.loseLife.Play();
 		_invincible = true;
 		_millisAtLastDamage = Time.time;
 		_health -= amount;

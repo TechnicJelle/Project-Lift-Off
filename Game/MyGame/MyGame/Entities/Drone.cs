@@ -21,7 +21,7 @@ public class Drone : Enemy
 	{
 		if (!base.Update()) return;
 		if (!this.visible || MyGame.LevelManager.CurrentLevel().Player == null) return;
-    
+
 		Vector2 toTarget = Vector2.Sub(MyGame.LevelManager.CurrentLevel().Player.GetPos(), new Vector2(x, y));
 		ApplyForce(Vector2.SetMag(toTarget, MOVEMENT_SPEED));
 
@@ -40,5 +40,6 @@ public class Drone : Enemy
 		MyGame.LevelManager.CurrentLevel().Player.TakeDamage(_vel);
 		TakeDamage(new Vector2(0, 0));
 		game.AddChild(new DroneExplosion(GetPos()));
+		SoundManager.explosion.Play();
 	}
 }
