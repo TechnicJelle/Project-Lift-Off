@@ -19,7 +19,7 @@ public class MyGame : Game
 		targetFps = 60;
 		LevelManager = new LevelManager();
 
-		Sprite background = new("background.png")
+		Sprite background = new("background0.png")
 		{
 			width = width,
 			height = height,

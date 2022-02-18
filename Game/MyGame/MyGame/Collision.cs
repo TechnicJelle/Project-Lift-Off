@@ -17,7 +17,7 @@ public static class Collision
 			(target.y - rayOrigin.y) / rayDir.y);
 		Vector2 tFar = new(
 			(target.x + target.width - rayOrigin.x) / rayDir.x,
-			(target.y + target.height - rayOrigin.y) / rayDir.y); //TODO: make sure these are correct, cause i think this code expects the origin to be at the top left and gxp does origins in the middle
+			(target.y + target.height - rayOrigin.y) / rayDir.y);
 
 		if (float.IsNaN(tFar.y) || float.IsNaN(tFar.x)) return NoCollision;
 		if (float.IsNaN(tNear.y) || float.IsNaN(tNear.x)) return NoCollision;
