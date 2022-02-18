@@ -11,10 +11,11 @@ public class Player : Entity
 	//Variables for the designers:
 	//Movement:
 	private const float PLAYER_MOVEMENT_SPEED = 100.0f;
+	private const float DASH_THRESHOLD = 30.0f; //sorry ;-;
 
 	//Attack:
 	private const float ATTACK_REACH = 200.0f;
-	private const float ATTACK_CONE = Mathf.PI;
+	private const float ATTACK_CONE = Mathf.HALF_PI;
 	private const float ATTACK_FORCE_STRENGTH = 10.0f;
 
 	//Animation:
@@ -27,8 +28,9 @@ public class Player : Entity
 
 	//Hold to jump higher:
 	private const int MILLIS_FOR_MAX_JUMP = 500;
-	private const float MIN_INSTANT_JUMP_FORCE = 8.0f; //when you jump, you always jump at least with this much force
+	private const float MIN_INSTANT_JUMP_FORCE = 30.0f; //when you jump, you always jump at least with this much force
 	private const float MAX_GRADUAL_JUMP_FORCE = 6.0f; //every frame you're jumping, a fraction of this force is applied
+	private const float JUMP_FORCE_SLOPE = 0.5f;
 
 	//Dash:
 	private const float DASH_FORCE = 100.0f;
@@ -70,7 +72,7 @@ public class Player : Entity
 				_currentlyCollidingWithEnemies.Add(enemy);
 		}
 
-		bool isDashing = _vel.MagSq() > 30.0f;
+		bool isDashing = _vel.MagSq() > DASH_THRESHOLD;
 		// Console.WriteLine(this._vel.MagSq() > PLAYER_MOVEMENT_SPEED * PLAYER_MOVEMENT_SPEED * 1.1);
 		// Console.WriteLine(_vel.MagSq());
 		// SetAnimationDelay((byte) Mathf.Map(_vel.MagSq(), 0, 200, 255, 50));
@@ -122,9 +124,9 @@ public class Player : Entity
 			//jumpProgress (range: 0.0f..1.0f) represents how long the jump has been going on for.
 			//0.0f: when the jump has just started
 			//1.0f: when the jump has reached its maximum height
-			//TODO: Construct a better formula for the jumpForce, preferably not a linear one like this, but instead an exponential one
-			float jumpForce = Mathf.Map(jumpProgress, 0.0f, 1.0f, MAX_GRADUAL_JUMP_FORCE, 0.0f);
-
+			//DONE: Construct a better formula for the jumpForce, preferably not a linear one like this, but instead an exponential one
+			// float jumpForce = Mathf.Map(jumpProgress, 0.0f, 1.0f, MAX_GRADUAL_JUMP_FORCE, 0.0f);
+			float jumpForce = MAX_GRADUAL_JUMP_FORCE - MAX_GRADUAL_JUMP_FORCE * Mathf.Pow(jumpProgress, JUMP_FORCE_SLOPE);
 
 			ApplyForce(new Vector2(0, -jumpForce));
 			if(MyGame.DEBUG_MODE) Console.WriteLine("jumping with force of " + jumpForce + ". jump progress: " + jumpProgress);

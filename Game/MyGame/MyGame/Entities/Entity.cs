@@ -1,5 +1,4 @@
-﻿using System;
-using GXPEngine;
+﻿using GXPEngine;
 using GXPEngine.Core;
 
 namespace MyGame.MyGame.Entities;
@@ -94,10 +93,7 @@ public class Entity : Solid
 				{
 					_vel.y *= WALL_SLIDE_DRAG_MULTIPLIER;
 				}
-			}
-			else
-			{
-				if (_vel.y < 0)
+				else if (_vel.y < 0)
 				{
 					_vel.y *= PLATFORM_CLIMB_ASSIST_MULTIPLIER;
 				}

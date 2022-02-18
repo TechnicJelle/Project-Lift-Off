@@ -91,6 +91,7 @@
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
     <Compile Include="MyGame\Collision.cs" />
     <Compile Include="MyGame\Entities\Drone.cs" />
+    <Compile Include="MyGame\Entities\DroneExplosion.cs" />
     <Compile Include="MyGame\Entities\Enemy.cs" />
     <Compile Include="MyGame\Entities\Entity.cs" />
     <Compile Include="MyGame\Entities\Player.cs" />
