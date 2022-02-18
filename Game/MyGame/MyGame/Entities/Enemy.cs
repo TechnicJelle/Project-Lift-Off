@@ -1,6 +1,5 @@
 using System;
 using GXPEngine;
-using GXPEngine.Core;
 using TiledMapParser;
 
 namespace MyGame.MyGame.Entities;
