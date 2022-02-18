@@ -68,11 +68,14 @@ public class Entity : Solid
 			if (this is Bullet && solidInLevel is Enemy or Bullet) continue; //bullets shouldn't collide with enemies and other bullets
 			if (this is Bullet bullet) //if bullet collides with anything else, bullet gets killed
 			{
-				if(solidInLevel is Player player) //when colliding with a player, though, also damage the player
+				bullet.TakeDamage(silent: true);
+				if (solidInLevel is Player player) //when colliding with a player, though, also damage the player
+				{
 					player.TakeDamage(bullet._vel);
-				bullet.TakeDamage(silent:true);
-				continue;
+					continue;
+				}
 			}
+
 			if (!(this is Drone && solidInLevel is Drone)) //drones should collide with each other
 			{
 				if (this is Enemy && solidInLevel is Enemy) continue; //enemies don't collide with enemies
@@ -159,7 +162,6 @@ public class Entity : Solid
 
 	public virtual bool TakeDamage(Vector2 directionOfAttack = null, int amount = 1, bool silent = false)
 	{
-		if (directionOfAttack == null) return false;
 		if (_invincible) return false;
 		if(!silent) SoundManager.loseLife.Play();
 		_invincible = true;
@@ -167,7 +169,9 @@ public class Entity : Solid
 		_health -= amount;
 		if (_health <= 0)
 			Die();
-		ApplyForce(directionOfAttack);
+
+		if (directionOfAttack != null)
+			ApplyForce(directionOfAttack);
 		return true;
 	}
 

@@ -26,7 +26,6 @@ public class Turret : Enemy
 
 	private void Shoot()
 	{
-		Console.WriteLine(this + "pew!");
 		SoundManager.shooter.Play();
 		Vector2 toTarget = Vector2.Sub(MyGame.LevelManager.CurrentLevel().Player.GetPos(), new Vector2(x, y));
 		MyGame.LevelManager.CurrentLevel().AddSolid(new Bullet(x, y, toTarget));
