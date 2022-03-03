@@ -6,32 +6,32 @@ using TiledMapParser;
 
 namespace MyGame.MyGame.Levels;
 
-public class Level : GameObject
+public class Level
 {
 	private readonly TiledLoader _tiledLoader;
 
 
 	public Player Player;
 
-	private readonly List<Solid> _solids = new();
+	private List<Solid> _solids = new();
 	public int _totalWaves { private set; get; }
 	public int _currentWave { private set; get; }
 	public int MillisAtStart;
 
 	public Level(string path)
 	{
-		_tiledLoader = new TiledLoader($"../../{path}", game);
-		// Solids = new List<Solid>();
+		_tiledLoader = new TiledLoader($"../../{path}", Game.main);
 	}
 
 	public void RemoveEntity(Entity e)
 	{
-		game.RemoveChild(e);
+		Game.main.RemoveChild(e);
 		_solids.Remove(e);
 	}
 
 	public void CreateLevel()
 	{
+		_solids = new List<Solid>();
 		_tiledLoader.autoInstance = true;
 
 		_tiledLoader.LoadImageLayers();
@@ -43,6 +43,11 @@ public class Level : GameObject
 		MillisAtStart = Time.time;
 	}
 
+	public void ClearLevel()
+	{
+
+	}
+
 	public List<Solid> GetVisibleSolids()
 	{
 		return _solids.Where(a => a.visible).ToList();
@@ -52,7 +57,7 @@ public class Level : GameObject
 	{
 		return _solids;
 	}
-	
+
 	public void AddSolid(Solid s)
 	{
 		_solids.Add(s);

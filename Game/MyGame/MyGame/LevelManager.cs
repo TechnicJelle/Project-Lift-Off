@@ -45,7 +45,6 @@ public class LevelManager
 		Level level = _levels[levelName];
 		level.CreateLevel();
 
-		_game.AddChild(level);
 		foreach (GameObject gameObject in _game.GetChildren())
 		{
 			if (gameObject is not Solid solid) continue;
@@ -69,7 +68,6 @@ public class LevelManager
 		{
 			_game.RemoveChild(solid);
 		}
-		_game.RemoveChild(level);
 	}
 
 	public Level CurrentLevel()

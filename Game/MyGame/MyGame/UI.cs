@@ -7,19 +7,32 @@ public static class UI
 {
 	private const string HEART_IMAGE = "heart.png";
 
-	private static int _playerHealth = MyGame.PLAYER_HEALTH;
+	private static int _playerHealth;
 
 	public static EasyDraw Canvas;
 	private static Sprite[] _hearts;
 
 	public static void Init()
 	{
+		if (Canvas != null)
+		{
+			Game.main.RemoveChild(Canvas);
+		}
 		Canvas = new EasyDraw(Game.main.width, Game.main.height);
 		Game.main.AddChild(Canvas);
 
-		Sprite heartImage = new(HEART_IMAGE);
+		ResetHearts();
+	}
 
+	public static void ResetHearts()
+	{
+		_playerHealth = MyGame.PLAYER_HEALTH;
+		if(_hearts != null) foreach (Sprite heart in _hearts)
+		{
+			Game.main.RemoveChild(heart);
+		}
 		_hearts = new Sprite[MyGame.PLAYER_HEALTH];
+		Sprite heartImage = new(HEART_IMAGE);
 		for (int i = 0; i < _hearts.Length; i++)
 		{
 			Game.main.AddChild(_hearts[i] = new Sprite(HEART_IMAGE, false, false)

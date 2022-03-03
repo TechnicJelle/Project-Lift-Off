@@ -26,9 +26,8 @@ public class MyGame : Game
 			height = height,
 		};
 		AddChild(background);
-		LevelManager.Init();
 
-		UI.Init();
+		StartGame();
 
 		if (DEBUG_MODE)
 		{
@@ -58,7 +57,28 @@ public class MyGame : Game
 
 		AddScore(1);
 
+		if (Input.GetKeyDown(Key.R))
+		{
+			StartGame();
+		}
+
 		UI.Text("Score: " + _score, width, 0);
+		if (Input.GetKeyDown(Key.B))
+		{
+			Console.WriteLine(GetDiagnostics());
+			foreach (GameObject gameObject in GetChildren())
+			{
+				Console.WriteLine("D: " + gameObject);
+			}
+		}
+	}
+
+	private void StartGame()
+	{
+		LevelManager.Init();
+
+		_score = 0;
+		UI.Init();
 	}
 
 	public static void AddScore(int additionAmount)

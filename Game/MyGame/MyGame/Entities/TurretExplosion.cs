@@ -16,7 +16,7 @@ public class TurretExplosion : AnimationSprite
 	public void Update()
 	{
 		AnimateFixed();
-		Console.WriteLine(currentFrame);
+		// Console.WriteLine(currentFrame);
 		if(currentFrame >= 45)
 			game.RemoveChild(this);
 	}
