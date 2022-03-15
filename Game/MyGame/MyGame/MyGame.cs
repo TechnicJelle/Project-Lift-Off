@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using GXPEngine;
 
 namespace MyGame.MyGame;
@@ -14,7 +15,7 @@ public class MyGame : Game
 
 	private static int _score;
 
-	private MyGame() : base(1408, 768, false, false, pPixelArt: true)
+	private MyGame() : base(1408, 768, true, false, pPixelArt: true)
 	{
 		targetFps = 60;
 		LevelManager = new LevelManager();

@@ -7,14 +7,14 @@ const int joystickY = A2;
 //const int joystickX = A1;
 //const int joystickY = A0;
 
-const int jumpPin = 9;
+const int jumpPin = 7;
 const int dashPin = 8;
-const int attackPin = 7;
+const int attackPin = 6;
 
 void setup() {
   delay(3000);
   Serial.begin( 9600 );
-  pinMode(jumpPin, INPUT_PULLUP);
+  pinMode(jumpPin, INPUT);
   pinMode(dashPin, INPUT);
   pinMode(attackPin, INPUT);
 
@@ -32,13 +32,13 @@ void readJoystick() {
 }
 
 void readClicks() {
-  if(digitalRead(jumpPin) == LOW) {
+  if(digitalRead(jumpPin) == HIGH) {
     Keyboard.press('w');
   } else if(digitalRead(dashPin) == HIGH) {
     Keyboard.press(KEY_LEFT_SHIFT);
   } else if(digitalRead(attackPin) == HIGH) {
-//  Keyboard.press('e');
-    Serial.print('e');    
+  Keyboard.press('e');
+//    Serial.print('e');    
   } else {
     Keyboard.releaseAll();
   }

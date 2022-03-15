@@ -8,8 +8,8 @@ namespace MyGame.MyGame;
 
 public static class Gamepad
 {
-	private const float DEAD_ZONE = 0.2f;
-	private const float TOP_ZONE = 0.98f;
+	private const float DEAD_ZONE = 0.5f;
+	private const float TOP_ZONE = 0.6f;
 
     private static readonly SerialPort SerialPort;
     public static Vector2 _joystick { get; private set; }

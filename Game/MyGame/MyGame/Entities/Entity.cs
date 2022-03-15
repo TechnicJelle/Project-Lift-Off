@@ -11,7 +11,7 @@ public class Entity : Solid
 	private const float WALL_SLIDE_DRAG_MULTIPLIER = 0.2f;
 	private const float PLATFORM_CLIMB_ASSIST_MULTIPLIER = 1.4f;
 	private readonly Vector2 _gravity = new(0.0f, 2.5f);
-	protected virtual int MILLIS_BETWEEN_DAMAGES() { return 500; }
+	protected virtual int MILLIS_BETWEEN_DAMAGES() { return 200; }
 
 	//Physics variables
 	public Vector2 _vel { get; }
